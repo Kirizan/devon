@@ -20,6 +20,45 @@ cd devon
 poetry install
 ```
 
+## Activating the Environment
+
+DEVON uses Poetry to manage its virtual environment. After running `poetry install`, you need to activate the environment before using the `devon` command directly.
+
+### Option 1: Activate the Poetry shell
+
+```bash
+# Spawn a shell with the virtual environment activated
+poetry shell
+
+# Now you can run devon commands directly
+devon --version
+devon search "llama"
+```
+
+### Option 2: Use `poetry run`
+
+```bash
+# Prefix each command with poetry run (no activation needed)
+poetry run devon --version
+poetry run devon search "llama"
+```
+
+### Option 3: Activate manually
+
+```bash
+# Get the virtualenv path and activate it
+eval $(poetry env activate)
+
+# Now devon is available directly
+devon --version
+```
+
+To deactivate the environment when you're done:
+
+```bash
+deactivate
+```
+
 ## Quick Start
 
 ```bash
@@ -105,7 +144,117 @@ Models are stored in `~/.cache/devon/models/` organized by source and model ID:
 
 ## Configuration
 
-Edit `~/.config/devon/config.yaml` to customize settings.
+DEVON loads its configuration from `~/.config/devon/config.yaml`. If the file doesn't exist, built-in defaults are used. You only need to specify the values you want to override.
+
+### Creating the Config File
+
+```bash
+mkdir -p ~/.config/devon
+$EDITOR ~/.config/devon/config.yaml
+```
+
+### Full Configuration Reference
+
+```yaml
+# ~/.config/devon/config.yaml
+
+# Storage settings
+storage:
+  # Where models are downloaded to
+  # Default: ~/.cache/devon/models
+  base_path: ~/.cache/devon/models
+
+  # Maximum total storage size (null = unlimited)
+  # When set, devon will warn before exceeding this limit
+  max_size_gb: null
+
+# Download behavior
+download:
+  # Resume interrupted downloads automatically
+  resume: true
+
+  # Verify file checksums after download
+  verify_checksums: true
+
+# Model source configuration
+sources:
+  # Default source when --source is not specified
+  default: huggingface
+
+  # List of enabled sources
+  enabled:
+    - huggingface
+
+# Search defaults
+search:
+  # Max results returned by default (override with --limit)
+  default_limit: 20
+
+  # Sort order for search results
+  # Options: downloads, likes, last_modified
+  sort_by: downloads
+
+# Display options
+display:
+  # Enable colored terminal output
+  color: true
+```
+
+### Configuration Examples
+
+**Use a different storage directory** (e.g., a larger drive):
+
+```yaml
+storage:
+  base_path: /mnt/data/models
+```
+
+**Cap total storage at 500GB**:
+
+```yaml
+storage:
+  max_size_gb: 500
+```
+
+**Show more search results by default**:
+
+```yaml
+search:
+  default_limit: 50
+```
+
+**Disable colored output** (useful for piping/scripting):
+
+```yaml
+display:
+  color: false
+```
+
+**Multiple overrides at once**:
+
+```yaml
+storage:
+  base_path: /data/llm-models
+  max_size_gb: 1000
+
+search:
+  default_limit: 30
+  sort_by: likes
+
+download:
+  verify_checksums: false
+```
+
+### How Configuration Merging Works
+
+DEVON deep-merges your config file with the built-in defaults. You only need to include the keys you want to change. For example, this minimal config:
+
+```yaml
+storage:
+  base_path: /mnt/data/models
+```
+
+results in all other settings (download, sources, search, display) keeping their default values.
 
 ## License
 
