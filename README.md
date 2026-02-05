@@ -26,11 +26,21 @@ DEVON uses Poetry to manage its virtual environment. After running `poetry insta
 
 ### Option 1: Activate the virtual environment
 
-```bash
-# Activate the Poetry-managed virtual environment
-eval $(poetry env activate)
+**Bash / Zsh:**
 
-# Now you can run devon commands directly
+```bash
+eval $(poetry env activate)
+```
+
+**Fish:**
+
+```fish
+eval (poetry env activate)
+```
+
+`poetry env activate` detects your shell and prints the correct activation command. Once activated, you can run devon commands directly:
+
+```bash
 devon --version
 devon search "llama"
 ```
@@ -43,8 +53,9 @@ deactivate
 
 ### Option 2: Use `poetry run`
 
+Works in any shell — no activation needed:
+
 ```bash
-# Prefix each command with poetry run (no activation needed)
 poetry run devon --version
 poetry run devon search "llama"
 ```
