@@ -150,18 +150,22 @@ class HuggingFaceSource(ModelSource):
         )
         architecture = self._extract_architecture(hf_model.tags or [])
         formats = self._detect_formats(hf_model.siblings or [])
-        quantization = self._detect_quantization(hf_model.tags or [], hf_model.modelId)
+        quantization = self._detect_quantization(hf_model.tags or [], hf_model.id or hf_model.modelId)
 
-        card_data = hf_model.cardData if hasattr(hf_model, "cardData") else None
+        card_data = getattr(hf_model, "card_data", None)
         model_license = None
-        if card_data and isinstance(card_data, dict):
-            model_license = card_data.get("license")
+        if card_data:
+            model_license = getattr(card_data, "license", None)
+
+        model_id = hf_model.id or hf_model.modelId
+        created = getattr(hf_model, "created_at", None)
+        modified = getattr(hf_model, "last_modified", None)
 
         return ModelMetadata(
             source="huggingface",
-            model_id=hf_model.modelId,
-            model_name=hf_model.modelId.split("/")[-1],
-            author=hf_model.author or hf_model.modelId.split("/")[0],
+            model_id=model_id,
+            model_name=model_id.split("/")[-1],
+            author=hf_model.author or model_id.split("/")[0],
             total_size_bytes=total_size,
             file_count=len(hf_model.siblings or []),
             parameter_count=param_count,
@@ -172,10 +176,10 @@ class HuggingFaceSource(ModelSource):
             license=model_license,
             downloads=hf_model.downloads or 0,
             likes=hf_model.likes or 0,
-            created_at=hf_model.createdAt.isoformat() if hf_model.createdAt else "",
-            updated_at=hf_model.lastModified.isoformat() if hf_model.lastModified else "",
-            web_url=f"https://huggingface.co/{hf_model.modelId}",
-            repo_url=f"https://huggingface.co/{hf_model.modelId}/tree/main",
+            created_at=created.isoformat() if created else "",
+            updated_at=modified.isoformat() if modified else "",
+            web_url=f"https://huggingface.co/{model_id}",
+            repo_url=f"https://huggingface.co/{model_id}/tree/main",
         )
 
     def _extract_param_count(self, hf_model) -> Optional[int]:
@@ -185,7 +189,8 @@ class HuggingFaceSource(ModelSource):
             if match:
                 return int(match.group(1))
 
-        match = re.search(r"(\d+)b", hf_model.modelId.lower())
+        model_id = hf_model.id or hf_model.modelId
+        match = re.search(r"(\d+)b", model_id.lower())
         return int(match.group(1)) if match else None
 
     def _extract_architecture(self, tags: List[str]) -> Optional[str]:
