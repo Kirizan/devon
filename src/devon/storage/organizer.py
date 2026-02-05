@@ -12,10 +12,14 @@ class ModelStorage:
         """
         Initialize storage manager.
 
-        Default: ~/.cache/devon/models/
+        Reads base_path from ~/.config/devon/config.yaml if not provided.
+        Falls back to ~/.cache/devon/models/ if no config exists.
         """
         if base_path is None:
-            base_path = Path.home() / ".cache" / "devon" / "models"
+            from devon.config.settings import Settings
+
+            settings = Settings()
+            base_path = settings.storage_path
 
         self.base_path = Path(base_path)
         self.index_file = self.base_path.parent / "index.json"
