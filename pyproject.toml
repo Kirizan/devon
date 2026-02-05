@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "devon-ai"
+version = "1.0.0"
+description = "Discovery Engine and Vault for Open Neural models"
+authors = ["Nick Kirby"]
+license = "Apache-2.0"
+readme = "README.md"
+keywords = ["llm", "ai", "model-management", "huggingface", "machine-learning"]
+packages = [{include = "devon", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1"
+rich = "^13.0"
+huggingface-hub = "^0.32"
+pydantic = "^2.0"
+pyyaml = "^6.0"
+requests = "^2.31"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4"
+pytest-cov = "^4.1"
+black = "^23.0"
+mypy = "^1.5"
+ruff = "^0.1"
+
+[tool.poetry.scripts]
+devon = "devon.cli.main:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
