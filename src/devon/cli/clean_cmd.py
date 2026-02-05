@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import click
 from rich.console import Console
 
+from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
 from devon.utils.size_parser import format_bytes
 
@@ -22,7 +23,8 @@ def clean(unused, days, clean_all, dry_run):
       devon clean --all
       devon clean --unused --dry-run
     """
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
     models = storage.list_local_models()
 
     if not models:

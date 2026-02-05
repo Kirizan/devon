@@ -3,6 +3,7 @@ import json
 import click
 from rich.console import Console
 
+from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
 
 console = Console()
@@ -18,7 +19,8 @@ def export(fmt, output):
       devon export --format kitt -o models.txt
       kitt run --model-list models.txt --engine vllm
     """
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
     models = storage.list_local_models()
 
     if not models:

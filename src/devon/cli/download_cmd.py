@@ -4,6 +4,7 @@ from dataclasses import asdict
 import click
 from rich.console import Console
 
+from devon.config.settings import Settings
 from devon.sources.registry import SourceRegistry
 from devon.storage.organizer import ModelStorage
 from devon.utils.size_parser import format_bytes
@@ -23,7 +24,8 @@ def download(model_identifier, source, force):
       devon download https://huggingface.co/Qwen/Qwen2.5-32B-Instruct
       devon download Qwen/Qwen2.5-32B-Instruct --source huggingface
     """
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
 
     # Parse input (URL or ID)
     if URLParser.is_url(model_identifier):

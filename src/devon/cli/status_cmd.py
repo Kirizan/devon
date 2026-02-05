@@ -3,6 +3,7 @@ from collections import Counter
 import click
 from rich.console import Console
 
+from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
 from devon.utils.size_parser import format_bytes
 
@@ -12,7 +13,8 @@ console = Console()
 @click.command()
 def status():
     """Show storage status and statistics."""
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
     models = storage.list_local_models()
 
     console.print("\n[bold cyan]DEVON Status[/bold cyan]\n")

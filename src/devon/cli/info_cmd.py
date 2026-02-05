@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from devon.config.settings import Settings
 from devon.sources.registry import SourceRegistry
 from devon.storage.organizer import ModelStorage
 from devon.utils.size_parser import format_bytes, format_number
@@ -19,7 +20,8 @@ def info(model_id, source):
     Example:
       devon info Qwen/Qwen2.5-32B-Instruct
     """
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
 
     # Check if we have it locally first
     local = storage.get_model_entry(source, model_id)

@@ -4,6 +4,7 @@ import click
 from rich.console import Console
 from rich.table import Table
 
+from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
 from devon.utils.size_parser import format_bytes
 
@@ -19,7 +20,8 @@ def list_models(source):
       devon list
       devon list --source huggingface
     """
-    storage = ModelStorage()
+    settings = Settings()
+    storage = ModelStorage(base_path=settings.storage_path)
     models = storage.list_local_models(source=source)
 
     if not models:
