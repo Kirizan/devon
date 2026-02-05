@@ -155,7 +155,11 @@ class HuggingFaceSource(ModelSource):
         card_data = getattr(hf_model, "card_data", None)
         model_license = None
         if card_data:
-            model_license = getattr(card_data, "license", None)
+            lic = getattr(card_data, "license", None)
+            if isinstance(lic, list):
+                model_license = ", ".join(str(l) for l in lic)
+            elif lic is not None:
+                model_license = str(lic)
 
         model_id = hf_model.id or hf_model.modelId
         created = getattr(hf_model, "created_at", None)
@@ -239,7 +243,6 @@ class HuggingFaceSource(ModelSource):
         downloaded_path = snapshot_download(
             repo_id=model_id,
             local_dir=dest_path,
-            resume_download=True,
         )
 
         # Return list of files
