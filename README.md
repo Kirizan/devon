@@ -15,12 +15,6 @@ DEVON is a command-line tool for discovering, downloading, and managing LLM mode
 ## Installation
 
 ```bash
-pip install devon-ai
-```
-
-Or from source:
-
-```bash
 git clone https://github.com/nick/devon
 cd devon
 poetry install
