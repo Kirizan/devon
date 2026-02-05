@@ -24,15 +24,21 @@ poetry install
 
 DEVON uses Poetry to manage its virtual environment. After running `poetry install`, you need to activate the environment before using the `devon` command directly.
 
-### Option 1: Activate the Poetry shell
+### Option 1: Activate the virtual environment
 
 ```bash
-# Spawn a shell with the virtual environment activated
-poetry shell
+# Activate the Poetry-managed virtual environment
+eval $(poetry env activate)
 
 # Now you can run devon commands directly
 devon --version
 devon search "llama"
+```
+
+To deactivate the environment when you're done:
+
+```bash
+deactivate
 ```
 
 ### Option 2: Use `poetry run`
@@ -41,22 +47,6 @@ devon search "llama"
 # Prefix each command with poetry run (no activation needed)
 poetry run devon --version
 poetry run devon search "llama"
-```
-
-### Option 3: Activate manually
-
-```bash
-# Get the virtualenv path and activate it
-eval $(poetry env activate)
-
-# Now devon is available directly
-devon --version
-```
-
-To deactivate the environment when you're done:
-
-```bash
-deactivate
 ```
 
 ## Quick Start
