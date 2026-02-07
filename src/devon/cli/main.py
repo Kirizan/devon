@@ -27,6 +27,7 @@ from devon.cli.info_cmd import info  # noqa: E402
 from devon.cli.clean_cmd import clean  # noqa: E402
 from devon.cli.export_cmd import export  # noqa: E402
 from devon.cli.status_cmd import status  # noqa: E402
+from devon.cli.remove_cmd import remove  # noqa: E402
 
 # Register commands
 cli.add_command(search)
@@ -36,6 +37,7 @@ cli.add_command(info)
 cli.add_command(clean)
 cli.add_command(export)
 cli.add_command(status)
+cli.add_command(remove)
 
 if __name__ == "__main__":
     cli()
