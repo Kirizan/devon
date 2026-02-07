@@ -238,12 +238,17 @@ class HuggingFaceSource(ModelSource):
         model_id: str,
         dest_path: str,
         progress_callback=None,
+        allow_patterns: Optional[List[str]] = None,
     ) -> List[str]:
         """Download model using HF snapshot_download."""
-        downloaded_path = snapshot_download(
-            repo_id=model_id,
-            local_dir=dest_path,
-        )
+        kwargs = {
+            "repo_id": model_id,
+            "local_dir": dest_path,
+        }
+        if allow_patterns:
+            kwargs["allow_patterns"] = allow_patterns
+
+        downloaded_path = snapshot_download(**kwargs)
 
         # Return list of files
         downloaded_files = []

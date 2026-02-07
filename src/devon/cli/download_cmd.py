@@ -17,12 +17,15 @@ console = Console()
 @click.argument("model_identifier")
 @click.option("--source", "-s", help="Source (if not URL)")
 @click.option("--force", "-f", is_flag=True, help="Re-download if exists")
-def download(model_identifier, source, force):
+@click.option("--include", "-i", multiple=True, help="File patterns to include (e.g. '*Q4_K_M*')")
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt")
+def download(model_identifier, source, force, include, yes):
     """Download a model by ID or URL.
 
     Examples:
       devon download https://huggingface.co/Qwen/Qwen2.5-32B-Instruct
       devon download Qwen/Qwen2.5-32B-Instruct --source huggingface
+      devon download bartowski/Meta-Llama-3.1-8B-Instruct-GGUF --include '*Q4_K_M*'
     """
     settings = Settings()
     storage = ModelStorage(base_path=settings.storage_path)
@@ -81,9 +84,13 @@ def download(model_identifier, source, force):
         console.print(f"Available: {format_bytes(free_space)}")
         return
 
+    # Show include patterns if specified
+    if include:
+        console.print(f"Include patterns: {', '.join(include)}")
+
     # Confirm
     console.print(f"\n[yellow]Download {format_bytes(required)}?[/yellow]")
-    if not click.confirm("Proceed?", default=True):
+    if not yes and not click.confirm("Proceed?", default=True):
         return
 
     # Download
@@ -91,7 +98,8 @@ def download(model_identifier, source, force):
     dest = storage.get_model_path(source_name, model_id)
 
     try:
-        files = source_impl.download_model(model_id, str(dest))
+        allow_patterns = list(include) if include else None
+        files = source_impl.download_model(model_id, str(dest), allow_patterns=allow_patterns)
 
         # Register
         metadata_dict = asdict(model_info)

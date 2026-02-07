@@ -50,6 +50,7 @@ class ModelSource(ABC):
         model_id: str,
         dest_path: str,
         progress_callback=None,
+        allow_patterns: Optional[List[str]] = None,
     ) -> List[str]:
         """
         Download all files for a model.
@@ -58,6 +59,7 @@ class ModelSource(ABC):
             model_id: Model identifier
             dest_path: Destination directory
             progress_callback: Optional callback for progress updates
+            allow_patterns: Optional glob patterns to filter files (e.g., ["*Q4_K_M*"])
 
         Returns:
             List of downloaded file paths
