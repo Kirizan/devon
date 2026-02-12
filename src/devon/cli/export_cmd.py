@@ -34,14 +34,16 @@ def export(fmt, output):
         # Strip non-serializable fields for clean JSON
         export_data = []
         for model in models:
-            export_data.append({
-                "source": model["source"],
-                "model_id": model["model_id"],
-                "path": model["path"],
-                "size_bytes": model["size_bytes"],
-                "downloaded_at": model["downloaded_at"],
-                "files": model["files"],
-            })
+            export_data.append(
+                {
+                    "source": model["source"],
+                    "model_id": model["model_id"],
+                    "path": model["path"],
+                    "size_bytes": model["size_bytes"],
+                    "downloaded_at": model["downloaded_at"],
+                    "files": model["files"],
+                }
+            )
         content = json.dumps(export_data, indent=2)
 
     if output:

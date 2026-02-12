@@ -40,9 +40,7 @@ class ModelStorage:
     ) -> None:
         """Register downloaded model."""
         path = self.get_model_path(source, model_id)
-        size_bytes = sum(
-            (path / f).stat().st_size for f in files if (path / f).exists()
-        )
+        size_bytes = sum((path / f).stat().st_size for f in files if (path / f).exists())
 
         # Remove non-serializable data from metadata
         clean_metadata = {}

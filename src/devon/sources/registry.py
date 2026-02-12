@@ -24,11 +24,7 @@ class SourceRegistry:
     @classmethod
     def list_available(cls) -> List[str]:
         """List all available (accessible) sources."""
-        return [
-            name
-            for name, source_class in cls._sources.items()
-            if source_class.is_available()
-        ]
+        return [name for name, source_class in cls._sources.items() if source_class.is_available()]
 
     @classmethod
     def list_all(cls) -> List[str]:

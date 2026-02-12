@@ -145,19 +145,19 @@ class HuggingFaceSource(ModelSource):
     def _convert_to_metadata(self, hf_model) -> ModelMetadata:
         """Convert HF ModelInfo to ModelMetadata."""
         param_count = self._extract_param_count(hf_model)
-        total_size = sum(
-            s.size for s in (hf_model.siblings or []) if hasattr(s, "size") and s.size
-        )
+        total_size = sum(s.size for s in (hf_model.siblings or []) if hasattr(s, "size") and s.size)
         architecture = self._extract_architecture(hf_model.tags or [])
         formats = self._detect_formats(hf_model.siblings or [])
-        quantization = self._detect_quantization(hf_model.tags or [], hf_model.id or hf_model.modelId)
+        quantization = self._detect_quantization(
+            hf_model.tags or [], hf_model.id or hf_model.modelId
+        )
 
         card_data = getattr(hf_model, "card_data", None)
         model_license = None
         if card_data:
             lic = getattr(card_data, "license", None)
             if isinstance(lic, list):
-                model_license = ", ".join(str(l) for l in lic)
+                model_license = ", ".join(str(item) for item in lic)
             elif lic is not None:
                 model_license = str(lic)
 
@@ -241,14 +241,14 @@ class HuggingFaceSource(ModelSource):
         allow_patterns: Optional[List[str]] = None,
     ) -> List[str]:
         """Download model using HF snapshot_download."""
-        kwargs = {
+        download_kwargs: dict = {
             "repo_id": model_id,
             "local_dir": dest_path,
         }
         if allow_patterns:
-            kwargs["allow_patterns"] = allow_patterns
+            download_kwargs["allow_patterns"] = allow_patterns
 
-        downloaded_path = snapshot_download(**kwargs)
+        downloaded_path = snapshot_download(**download_kwargs)
 
         # Return list of files
         downloaded_files = []

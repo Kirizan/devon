@@ -65,7 +65,7 @@ class TestRemoveCommand:
             storage.delete_model.return_value = True
             mock_storage_cls.return_value = storage
 
-            result = runner.invoke(remove, ["test/model", "--source", "custom", "-y"])
+            runner.invoke(remove, ["test/model", "--source", "custom", "-y"])
 
             storage.get_model_entry.assert_called_once_with("custom", "test/model")
             storage.delete_model.assert_called_once_with("custom", "test/model")
@@ -82,6 +82,6 @@ class TestRemoveCommand:
             }
             mock_storage_cls.return_value = storage
 
-            result = runner.invoke(remove, ["test/model"], input="n\n")
+            runner.invoke(remove, ["test/model"], input="n\n")
 
             storage.delete_model.assert_not_called()

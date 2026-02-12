@@ -24,10 +24,9 @@ class ModelFilter:
     def _check_author(self, model: ModelMetadata, value: str) -> bool:
         return model.author.lower() == value.lower()
 
-    def _check_format(self, model: ModelMetadata, value: str) -> bool:
-        if isinstance(value, str):
-            value = [value]
-        return any(f in model.format for f in value)
+    def _check_format(self, model: ModelMetadata, value: str | list[str]) -> bool:
+        values = [value] if isinstance(value, str) else value
+        return any(f in model.format for f in values)
 
     def _check_architecture(self, model: ModelMetadata, value: str) -> bool:
         return model.architecture is not None and model.architecture.lower() == value.lower()
