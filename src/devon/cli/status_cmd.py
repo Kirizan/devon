@@ -28,7 +28,5 @@ def status():
     if sources:
         console.print("\n[bold]By source:[/bold]")
         for source, count in sources.items():
-            source_size = sum(
-                m["size_bytes"] for m in models if m["source"] == source
-            )
+            source_size = sum(m["size_bytes"] for m in models if m["source"] == source)
             console.print(f"  {source}: {count} models ({format_bytes(source_size)})")

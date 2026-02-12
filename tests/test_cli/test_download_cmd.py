@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, patch, PropertyMock
+from unittest.mock import MagicMock, patch
 from collections import namedtuple
 
 import pytest
@@ -69,7 +69,7 @@ def mock_env(tmp_path):
 class TestDownloadInclude:
     def test_include_forwarded_to_download_model(self, runner, mock_env):
         """--include patterns should be passed as allow_patterns to download_model."""
-        result = runner.invoke(
+        runner.invoke(
             download,
             ["test/model", "--include", "*Q4_K_M*", "--include", "*Q5_K_M*", "-y"],
         )
@@ -80,7 +80,7 @@ class TestDownloadInclude:
 
     def test_no_include_passes_none(self, runner, mock_env):
         """Without --include, allow_patterns should be None."""
-        result = runner.invoke(download, ["test/model", "-y"])
+        runner.invoke(download, ["test/model", "-y"])
 
         mock_env["source"].download_model.assert_called_once()
         call_kwargs = mock_env["source"].download_model.call_args
@@ -88,7 +88,7 @@ class TestDownloadInclude:
 
     def test_yes_flag_skips_confirmation(self, runner, mock_env):
         """--yes flag should skip the confirmation prompt."""
-        result = runner.invoke(download, ["test/model", "-y"])
+        runner.invoke(download, ["test/model", "-y"])
 
         # Should not have prompted (no input needed) and should have called download
         mock_env["source"].download_model.assert_called_once()

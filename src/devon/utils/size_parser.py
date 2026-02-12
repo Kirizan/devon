@@ -30,7 +30,7 @@ def parse_size(size_str: str) -> Optional[int]:
     return int(value * multipliers[unit])
 
 
-def format_bytes(bytes_val: int) -> str:
+def format_bytes(bytes_val: float) -> str:
     """Format bytes to human-readable string."""
     if bytes_val < 0:
         return "0B"
