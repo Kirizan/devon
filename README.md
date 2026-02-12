@@ -39,7 +39,7 @@ devon export --format kitt -o models.txt
 
 | Command | Description |
 |---|---|
-| `devon search` | Search for models with filters |
+| `devon search` | Search for models with filters ([filter guide](https://kirizan.github.io/devon/guides/searching/)) |
 | `devon download` | Download a model by URL or ID |
 | `devon list` | List downloaded models |
 | `devon info` | Show model details |
@@ -47,6 +47,25 @@ devon export --format kitt -o models.txt
 | `devon clean` | Remove old or unused models |
 | `devon remove` | Delete a specific model |
 | `devon export` | Export paths for KITT |
+
+### Search Filters
+
+The `search` command supports these filters (combine freely, AND logic):
+
+```bash
+devon search "query"                          # text search
+devon search --provider qwen                  # by author/org (-p)
+devon search --params 30b                     # by parameter count (±20% tolerance)
+devon search --size "<100gb"                  # by file size (<, <=, >, >=)
+devon search --format gguf                    # by format (-f: gguf, safetensors, pytorch, onnx)
+devon search --task text-generation           # by pipeline tag (-t)
+devon search --license apache-2.0             # by license (-l)
+devon search --limit 50                       # max results (default 20)
+```
+
+Filters also work inline: `devon search "qwen 30b gguf"` auto-extracts params and format.
+
+See the [full filter guide](https://kirizan.github.io/devon/guides/searching/) for detailed examples and sample output.
 
 ## Documentation
 
