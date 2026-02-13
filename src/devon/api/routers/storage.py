@@ -1,6 +1,5 @@
 """Storage status, clean, and export endpoints."""
 
-import json
 from collections import Counter
 from datetime import datetime, timedelta
 
