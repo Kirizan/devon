@@ -20,6 +20,7 @@ async def download_model(
     # Check if already downloaded
     if not body.force and storage.is_downloaded(body.source, body.model_id):
         existing = storage.get_model_entry(body.source, body.model_id)
+        assert existing is not None  # guarded by is_downloaded
         return DownloadResponse(
             model_id=body.model_id,
             source=body.source,
@@ -55,6 +56,7 @@ async def download_model(
     )
 
     entry = storage.get_model_entry(body.source, body.model_id)
+    assert entry is not None  # just registered above
     return DownloadResponse(
         model_id=body.model_id,
         source=body.source,
