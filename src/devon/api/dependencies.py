@@ -33,9 +33,7 @@ def get_source(source_name: str = "huggingface"):
 
 
 async def verify_api_key(
-    credentials: Annotated[
-        HTTPAuthorizationCredentials | None, Depends(_bearer_scheme)
-    ] = None,
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer_scheme)] = None,
 ) -> None:
     """Verify bearer token if DEVON_API_KEY is configured.
 
