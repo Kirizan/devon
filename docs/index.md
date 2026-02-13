@@ -2,11 +2,12 @@
 
 > *"DEVON manages the models. KITT tests them."*
 
-**DEVON** (Discovery Engine and Vault for Open Neural models) is a command-line tool
-for discovering, downloading, and managing LLM models from HuggingFace and other
+**DEVON** (Discovery Engine and Vault for Open Neural models) is a CLI tool and REST
+API for discovering, downloading, and managing LLM models from HuggingFace and other
 sources. It gives you a single workflow to search massive model repositories, pull
 weights to local storage, and keep your model vault organized -- so you can spend your
-time testing, not hunting for files.
+time testing, not hunting for files. Run it locally as a CLI or deploy it as a
+containerized API for remote model management.
 
 ---
 
@@ -36,6 +37,14 @@ time testing, not hunting for files.
 :   Override storage paths, search defaults, and display options in a single config
     file. DEVON deep-merges your overrides with sensible defaults.
 
+**REST API**
+:   Run `devon serve` to expose every capability over HTTP. The FastAPI-based server
+    supports optional bearer token auth and mirrors all CLI operations.
+
+**Docker Ready**
+:   Ship DEVON as a container with a single volume mount. Models, index, and config
+    all live under `/data` for easy host-path binding.
+
 ---
 
 ## Quick Links
@@ -43,7 +52,7 @@ time testing, not hunting for files.
 | Section | What you will find |
 |---|---|
 | [Getting Started](getting-started/index.md) | Installation, environment setup, and your first model download |
-| [Guides](guides/index.md) | Task-focused walkthroughs -- searching, downloading, managing, KITT integration, configuration |
+| [Guides](guides/index.md) | Task-focused walkthroughs -- searching, downloading, managing, REST API, Docker, KITT integration, configuration |
 | [Reference](reference/index.md) | CLI reference, configuration schema, model metadata, and storage index format |
 | [Concepts](concepts/index.md) | Architecture overview, source plugin system, and storage design |
 | [Changelog](changelog.md) | Release history and migration notes |
@@ -57,6 +66,9 @@ devon search --provider qwen --params 30b --size "<100gb"
 devon download Qwen/Qwen2.5-32B-Instruct
 devon list
 devon export --format kitt -o models.txt
+
+# Or run as an API server
+devon serve --host 0.0.0.0 --port 8000
 ```
 
 ---

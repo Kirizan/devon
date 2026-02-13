@@ -66,9 +66,34 @@ kitt run --model-list models.txt --engine vllm --suite standard
 This pattern scales to any number of models. Download as many as you
 need, export once, and KITT tests them all.
 
+## Remote Integration via REST API
+
+When DEVON runs as a containerized API server, KITT (or any client) can
+manage models over HTTP without requiring DEVON to be installed locally:
+
+```bash
+# Search for models
+curl "http://devon-host:8000/api/v1/search?provider=qwen&limit=5"
+
+# Download a model
+curl -X POST http://devon-host:8000/api/v1/downloads \
+  -H "Content-Type: application/json" \
+  -d '{"model_id": "Qwen/Qwen2.5-7B-Instruct"}'
+
+# Export model paths
+curl -X POST http://devon-host:8000/api/v1/export \
+  -H "Content-Type: application/json" \
+  -d '{"format": "kitt"}'
+```
+
+See the [REST API guide](rest-api.md) and
+[Docker Deployment guide](docker.md) for setup details.
+
 ## Further Reading
 
 - [KITT documentation](https://kirizan.github.io/kitt/)
 - [Searching for models](searching.md)
 - [Downloading models](downloading.md)
 - [Managing local models](managing.md)
+- [REST API](rest-api.md)
+- [Docker Deployment](docker.md)

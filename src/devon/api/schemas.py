@@ -1,0 +1,160 @@
+"""Pydantic v2 request/response models for the DEVON API."""
+
+from typing import Any, Dict, List, Optional
+
+from pydantic import BaseModel, Field
+
+
+# --- Health ---
+
+
+class HealthResponse(BaseModel):
+    status: str = "ok"
+    version: str = "1.0.0"
+
+
+# --- Model result (shared) ---
+
+
+class ModelResult(BaseModel):
+    source: str
+    model_id: str
+    model_name: str
+    author: str
+    total_size_bytes: int
+    file_count: int
+    parameter_count: Optional[int] = None
+    architecture: Optional[str] = None
+    format: List[str] = Field(default_factory=list)
+    quantization: Optional[str] = None
+    tags: List[str] = Field(default_factory=list)
+    license: Optional[str] = None
+    downloads: int = 0
+    likes: int = 0
+    created_at: str = ""
+    updated_at: str = ""
+    web_url: str = ""
+    repo_url: str = ""
+
+
+def metadata_to_result(metadata) -> ModelResult:
+    """Convert a ModelMetadata dataclass to a ModelResult schema."""
+    return ModelResult(
+        source=metadata.source,
+        model_id=metadata.model_id,
+        model_name=metadata.model_name,
+        author=metadata.author,
+        total_size_bytes=metadata.total_size_bytes,
+        file_count=metadata.file_count,
+        parameter_count=metadata.parameter_count,
+        architecture=metadata.architecture,
+        format=metadata.format,
+        quantization=metadata.quantization,
+        tags=metadata.tags,
+        license=metadata.license,
+        downloads=metadata.downloads,
+        likes=metadata.likes,
+        created_at=metadata.created_at,
+        updated_at=metadata.updated_at,
+        web_url=metadata.web_url,
+        repo_url=metadata.repo_url,
+    )
+
+
+# --- Search ---
+
+
+class SearchResponse(BaseModel):
+    query: Optional[str] = None
+    source: str
+    count: int
+    results: List[ModelResult]
+
+
+# --- Local models ---
+
+
+class LocalModel(BaseModel):
+    source: str
+    model_id: str
+    path: str
+    size_bytes: int
+    downloaded_at: str
+    last_used: Optional[str] = None
+    files: List[str] = Field(default_factory=list)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class LocalModelsResponse(BaseModel):
+    count: int
+    models: List[LocalModel]
+
+
+class ModelInfoResponse(BaseModel):
+    local: Optional[LocalModel] = None
+    remote: Optional[ModelResult] = None
+
+
+class DeleteResponse(BaseModel):
+    deleted: bool
+    model_id: str
+    source: str
+
+
+# --- Download ---
+
+
+class DownloadRequest(BaseModel):
+    model_id: str
+    source: str = "huggingface"
+    force: bool = False
+    include_patterns: Optional[List[str]] = None
+
+
+class DownloadResponse(BaseModel):
+    model_id: str
+    source: str
+    path: str
+    files: List[str]
+    size_bytes: int
+
+
+# --- Storage ---
+
+
+class StorageStatusResponse(BaseModel):
+    model_count: int
+    total_size_bytes: int
+    storage_path: str
+    sources: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+
+
+class CleanRequest(BaseModel):
+    unused: bool = False
+    days: int = 30
+    all: bool = False
+    dry_run: bool = False
+
+
+class CleanResponse(BaseModel):
+    removed: int
+    freed_bytes: int
+    dry_run: bool
+    models: List[str]
+
+
+class ExportRequest(BaseModel):
+    format: str = "kitt"
+
+
+class ExportResponse(BaseModel):
+    format: str
+    count: int
+    content: Any
+
+
+# --- Errors ---
+
+
+class ErrorResponse(BaseModel):
+    detail: str

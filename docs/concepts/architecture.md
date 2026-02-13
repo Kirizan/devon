@@ -8,6 +8,8 @@ package owns one responsibility, and the CLI layer ties them together.
 ```
 src/devon/
 ├── cli/           # Click commands and the main entry point group
+├── api/           # FastAPI REST API (app factory, routers, schemas)
+│   └── routers/   # Endpoint handlers (health, search, models, download, storage)
 ├── sources/       # Model source plugins (ABC, registry, implementations)
 ├── storage/       # Local model storage and JSON index management
 ├── search/        # Query parsing and filter logic
@@ -21,8 +23,17 @@ src/devon/
 
 The entry point is `devon.cli.main:cli`, a Click group that collects
 sub-commands from individual modules (`search_cmd.py`, `download_cmd.py`,
-etc.). Each command module is self-contained: it parses arguments, calls into
-the appropriate package, and renders output with Rich.
+`serve_cmd.py`, etc.). Each command module is self-contained: it parses
+arguments, calls into the appropriate package, and renders output with Rich.
+
+### api
+
+A FastAPI application that exposes DEVON's capabilities over HTTP. The
+`create_app()` factory in `api/app.py` initializes shared resources
+(`Settings`, `ModelStorage`) via a lifespan context manager and registers
+routers for health, search, models, downloads, and storage operations.
+Routers call the same internal classes the CLI uses -- no logic is
+duplicated. See the [REST API guide](../guides/rest-api.md) for usage.
 
 ### sources
 
@@ -90,19 +101,21 @@ the other with minimal ramp-up.
 
 ## Data Flow
 
-A typical operation follows this path:
+A typical operation follows this path, regardless of whether it originates
+from the CLI or the REST API:
 
 ```
-CLI command
+CLI command / API request
   → Source plugin (search / get_model_info / download_model)
     → ModelMetadata dataclass
       → ModelStorage (register, index write)
         → JSON index on disk
 ```
 
-1. The user invokes a CLI command (e.g., `devon download Qwen/Qwen2.5-32B`).
-2. The CLI resolves the source plugin and calls its method.
+1. The user invokes a CLI command (e.g., `devon download Qwen/Qwen2.5-32B`)
+   or sends an HTTP request to the API.
+2. The CLI or API router resolves the source plugin and calls its method.
 3. The source plugin returns a `ModelMetadata` instance.
 4. `ModelStorage` writes the model files to disk and registers the entry in
    the JSON index.
-5. The CLI renders a summary with Rich.
+5. The CLI renders a summary with Rich, or the API returns a JSON response.

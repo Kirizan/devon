@@ -1,0 +1,11 @@
+services:
+  devon:
+    build: .
+    ports:
+      - "${DEVON_PORT:-8000}:8000"
+    volumes:
+      - "${DEVON_DATA_PATH:-devon-data}:/data"
+    environment:
+      - DEVON_API_KEY=${DEVON_API_KEY:-}
+      - HF_TOKEN=${HF_TOKEN:-}
+    restart: unless-stopped
