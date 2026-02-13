@@ -117,12 +117,25 @@ devon serve --host 0.0.0.0 --port 9000
 
 ### Authentication
 
-Set the `DEVON_API_KEY` environment variable to require bearer token auth on all `/api/v1/*` endpoints. When unset, requests are unauthenticated.
+The `DEVON_API_KEY` environment variable controls authentication on all `/api/v1/*` endpoints:
+
+| Value | Behavior |
+|-------|----------|
+| `DEVON_API_KEY=mysecretkey` | Requires `Authorization: Bearer mysecretkey` header on every request |
+| `DEVON_API_KEY=disable` | Explicit opt-out -- all requests allowed without a token (local dev only) |
+| *(unset / empty)* | Returns **503 Service Unavailable** with instructions to configure the key |
 
 ```bash
-DEVON_API_KEY=secret devon serve
-curl -H "Authorization: Bearer secret" http://localhost:8000/api/v1/models
+# Production — require a bearer token
+DEVON_API_KEY=mysecretkey devon serve
+curl -H "Authorization: Bearer mysecretkey" http://localhost:8000/api/v1/models
+
+# Local development — explicitly disable auth
+DEVON_API_KEY=disable devon serve
+curl http://localhost:8000/api/v1/models
 ```
+
+> **Security note:** Environment variables are visible in `/proc/<pid>/environ` and in `ps e` output. On shared hosts, prefer injecting `DEVON_API_KEY` via a secrets manager or a file-based mechanism rather than a shell `export`.
 
 ### Quick Examples
 
@@ -160,7 +173,7 @@ curl http://localhost:8000/health
 |----------|---------|-------------|
 | `DEVON_PORT` | `8000` | Host port mapping |
 | `DEVON_DATA_PATH` | `devon-data` (named volume) | Host path for model storage |
-| `DEVON_API_KEY` | *(empty — no auth)* | Bearer token for API endpoints |
+| `DEVON_API_KEY` | *(empty — 503 until set)* | Bearer token for API endpoints (`disable` to skip auth) |
 | `HF_TOKEN` | *(empty)* | HuggingFace token for gated models |
 
 Mount your existing models directory:

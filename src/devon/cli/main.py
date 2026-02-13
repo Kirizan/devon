@@ -1,10 +1,30 @@
+import importlib
+
 import click
 from rich.console import Console
 
 console = Console()
 
 
-@click.group()
+class LazyGroup(click.Group):
+    """Click group that lazily imports commands on first use."""
+
+    _lazy_commands: dict[str, tuple[str, str]] = {}
+
+    def list_commands(self, ctx: click.Context) -> list[str]:
+        rv = set(super().list_commands(ctx))
+        rv.update(self._lazy_commands.keys())
+        return sorted(rv)
+
+    def get_command(self, ctx: click.Context, cmd_name: str) -> click.Command | None:
+        if cmd_name in self._lazy_commands:
+            module_path, attr = self._lazy_commands[cmd_name]
+            mod = importlib.import_module(module_path)
+            return getattr(mod, attr)
+        return super().get_command(ctx, cmd_name)
+
+
+@click.group(cls=LazyGroup)
 @click.version_option(version="1.0.0", prog_name="devon")
 def cli():
     """DEVON - Discovery Engine and Vault for Open Neural models
@@ -19,27 +39,17 @@ def cli():
     pass
 
 
-# Import commands
-from devon.cli.search_cmd import search  # noqa: E402
-from devon.cli.download_cmd import download  # noqa: E402
-from devon.cli.list_cmd import list_models  # noqa: E402
-from devon.cli.info_cmd import info  # noqa: E402
-from devon.cli.clean_cmd import clean  # noqa: E402
-from devon.cli.export_cmd import export  # noqa: E402
-from devon.cli.status_cmd import status  # noqa: E402
-from devon.cli.remove_cmd import remove  # noqa: E402
-from devon.cli.serve_cmd import serve  # noqa: E402
-
-# Register commands
-cli.add_command(search)
-cli.add_command(download)
-cli.add_command(list_models, name="list")
-cli.add_command(info)
-cli.add_command(clean)
-cli.add_command(export)
-cli.add_command(status)
-cli.add_command(remove)
-cli.add_command(serve)
+cli._lazy_commands = {
+    "search": ("devon.cli.search_cmd", "search"),
+    "download": ("devon.cli.download_cmd", "download"),
+    "list": ("devon.cli.list_cmd", "list_models"),
+    "info": ("devon.cli.info_cmd", "info"),
+    "clean": ("devon.cli.clean_cmd", "clean"),
+    "export": ("devon.cli.export_cmd", "export"),
+    "status": ("devon.cli.status_cmd", "status"),
+    "remove": ("devon.cli.remove_cmd", "remove"),
+    "serve": ("devon.cli.serve_cmd", "serve"),
+}
 
 if __name__ == "__main__":
     cli()

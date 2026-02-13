@@ -45,6 +45,31 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    # -- CORS middleware --
+    from starlette.middleware.cors import CORSMiddleware
+
+    allowed_origins = os.environ.get("DEVON_CORS_ORIGINS", "").split(",")
+    allowed_origins = [o.strip() for o in allowed_origins if o.strip()]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins or ["http://localhost:*"],
+        allow_methods=["GET", "POST", "DELETE"],
+        allow_headers=["Authorization", "Content-Type"],
+        allow_credentials=False,
+    )
+
+    # -- Security headers middleware --
+    @app.middleware("http")
+    async def add_security_headers(request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        if os.environ.get("DEVON_ENABLE_HSTS"):
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        return response
+
     # Import routers here to avoid circular imports
     from devon.api.routers.health import router as health_router
     from devon.api.routers.models import router as models_router

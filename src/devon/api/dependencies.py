@@ -1,5 +1,6 @@
 """Shared FastAPI dependencies for the DEVON API."""
 
+import hmac
 import os
 from typing import Annotated
 
@@ -35,15 +36,27 @@ def get_source(source_name: str = "huggingface"):
 async def verify_api_key(
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer_scheme)] = None,
 ) -> None:
-    """Verify bearer token if DEVON_API_KEY is configured.
+    """Verify bearer token based on DEVON_API_KEY configuration.
 
-    When the env var is unset or empty, all requests are allowed.
+    - Unset/empty: returns 503 telling the operator to configure the key.
+    - "disable": allows all requests (explicit opt-out for local dev).
+    - Any other value: requires a matching Bearer token.
     """
     expected = os.environ.get("DEVON_API_KEY", "")
+
     if not expected:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=(
+                "API key not configured. Set DEVON_API_KEY to a secret value, "
+                "or set DEVON_API_KEY=disable to allow unauthenticated access."
+            ),
+        )
+
+    if expected == "disable":
         return
 
-    if credentials is None or credentials.credentials != expected:
+    if credentials is None or not hmac.compare_digest(credentials.credentials, expected):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or missing API key",

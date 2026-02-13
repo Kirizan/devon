@@ -27,6 +27,7 @@ def parse_size(size_str: str) -> Optional[int]:
         "pb": 1024**5,
     }
 
+    # int() truncates sub-byte fractions, which is correct — bytes are whole numbers
     return int(value * multipliers[unit])
 
 
@@ -50,7 +51,9 @@ def parse_params(params_str: str) -> Optional[int]:
         "7B" -> 7
         "70" -> 70
     """
-    match = re.match(r"(\d+)b?", params_str.lower().strip())
+    match = re.match(r"(\d+)\s*b\b", params_str.lower().strip())
+    if not match:
+        match = re.match(r"(\d+)$", params_str.lower().strip())
     return int(match.group(1)) if match else None
 
 

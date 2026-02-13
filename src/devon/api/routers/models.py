@@ -1,5 +1,6 @@
 """Model listing, info, and deletion endpoints."""
 
+import logging
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -13,6 +14,8 @@ from devon.api.schemas import (
     metadata_to_result,
 )
 from devon.storage.organizer import ModelStorage
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1", dependencies=[Depends(verify_api_key)])
 
@@ -45,9 +48,12 @@ async def model_info(
         source_impl = get_source(source)
         metadata = source_impl.get_model_info(model_id)
         remote = metadata_to_result(metadata)
-    except Exception:
-        # Remote lookup is best-effort
-        pass
+    except HTTPException:
+        raise
+    except (ConnectionError, TimeoutError) as exc:
+        logger.warning("Remote lookup failed for %s/%s: %s", source, model_id, exc)
+    except Exception as exc:
+        logger.warning("Unexpected error during remote lookup for %s/%s: %s", source, model_id, exc)
 
     if local is None and remote is None:
         raise HTTPException(status_code=404, detail=f"Model not found: {source}/{model_id}")

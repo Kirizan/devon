@@ -1,8 +1,11 @@
 import json
+import logging
 import shutil
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
+
+logger = logging.getLogger(__name__)
 
 
 class ModelStorage:
@@ -24,12 +27,22 @@ class ModelStorage:
         self.base_path = Path(base_path)
         self.index_file = self.base_path.parent / "index.json"
 
-        self.base_path.mkdir(parents=True, exist_ok=True)
+        self.base_path.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.index = self._load_index()
+
+    def _validate_path(self, path: Path) -> Path:
+        """Ensure path resolves within base_path. Raises ValueError if not."""
+        resolved = path.resolve()
+        base_resolved = self.base_path.resolve()
+        if not str(resolved).startswith(str(base_resolved) + "/") and resolved != base_resolved:
+            raise ValueError(f"Path traversal detected: {path} resolves outside {self.base_path}")
+        return resolved
 
     def get_model_path(self, source: str, model_id: str) -> Path:
         """Get storage path for a model."""
-        return self.base_path / source / model_id
+        path = self.base_path / source / model_id
+        self._validate_path(path)
+        return path
 
     def register_model(
         self,
@@ -40,7 +53,12 @@ class ModelStorage:
     ) -> None:
         """Register downloaded model."""
         path = self.get_model_path(source, model_id)
-        size_bytes = sum((path / f).stat().st_size for f in files if (path / f).exists())
+        size_bytes = 0
+        for f in files:
+            try:
+                size_bytes += (path / f).stat().st_size
+            except (FileNotFoundError, OSError):
+                pass
 
         # Remove non-serializable data from metadata
         clean_metadata = {}
@@ -51,6 +69,7 @@ class ModelStorage:
                 json.dumps(v)
                 clean_metadata[k] = v
             except (TypeError, ValueError):
+                logger.debug("Metadata key %r not JSON-serializable, converting to str", k)
                 clean_metadata[k] = str(v)
 
         entry = {
@@ -91,6 +110,7 @@ class ModelStorage:
             return False
 
         path = Path(self.index[key]["path"])
+        self._validate_path(path)
         if path.exists():
             shutil.rmtree(path)
 
@@ -121,3 +141,4 @@ class ModelStorage:
         self.index_file.parent.mkdir(parents=True, exist_ok=True)
         with open(self.index_file, "w") as f:
             json.dump(self.index, f, indent=2)
+        self.index_file.chmod(0o600)
