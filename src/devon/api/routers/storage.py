@@ -50,11 +50,17 @@ async def clean_models(body: CleanRequest, storage: ModelStorage = Depends(get_s
         for model in models:
             last_used = model.get("last_used")
             if last_used is None:
-                downloaded = datetime.fromisoformat(model["downloaded_at"])
+                try:
+                    downloaded = datetime.fromisoformat(model["downloaded_at"])
+                except (ValueError, TypeError):
+                    continue
                 if downloaded < cutoff:
                     to_remove.append(model)
             else:
-                used_at = datetime.fromisoformat(last_used)
+                try:
+                    used_at = datetime.fromisoformat(last_used)
+                except (ValueError, TypeError):
+                    continue
                 if used_at < cutoff:
                     to_remove.append(model)
 

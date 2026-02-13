@@ -41,11 +41,17 @@ def clean(unused, days, clean_all, dry_run):
             last_used = model.get("last_used")
             if last_used is None:
                 # Never used - check download date
-                downloaded = datetime.fromisoformat(model["downloaded_at"])
+                try:
+                    downloaded = datetime.fromisoformat(model["downloaded_at"])
+                except (ValueError, TypeError):
+                    continue
                 if downloaded < cutoff:
                     to_remove.append(model)
             else:
-                used_at = datetime.fromisoformat(last_used)
+                try:
+                    used_at = datetime.fromisoformat(last_used)
+                except (ValueError, TypeError):
+                    continue
                 if used_at < cutoff:
                     to_remove.append(model)
     else:

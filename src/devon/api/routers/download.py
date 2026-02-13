@@ -20,7 +20,11 @@ async def download_model(
     # Check if already downloaded
     if not body.force and storage.is_downloaded(body.source, body.model_id):
         existing = storage.get_model_entry(body.source, body.model_id)
-        assert existing is not None  # guarded by is_downloaded
+        if existing is None:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Index inconsistency: {body.source}/{body.model_id} marked as downloaded but entry missing",
+            )
         return DownloadResponse(
             model_id=body.model_id,
             source=body.source,
@@ -56,7 +60,11 @@ async def download_model(
     )
 
     entry = storage.get_model_entry(body.source, body.model_id)
-    assert entry is not None  # just registered above
+    if entry is None:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Registration failed: entry missing after register for {body.source}/{body.model_id}",
+        )
     return DownloadResponse(
         model_id=body.model_id,
         source=body.source,

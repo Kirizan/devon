@@ -38,7 +38,12 @@ def list_models(source):
     table.add_column("Downloaded", width=20)
 
     for model in models:
-        downloaded = datetime.fromisoformat(model["downloaded_at"]).strftime("%Y-%m-%d %H:%M")
+        try:
+            downloaded = datetime.fromisoformat(model["downloaded_at"]).strftime(
+                "%Y-%m-%d %H:%M"
+            )
+        except (ValueError, TypeError):
+            downloaded = model.get("downloaded_at", "unknown")[:16]
         size = format_bytes(model["size_bytes"])
 
         table.add_row(
