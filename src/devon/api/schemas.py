@@ -17,6 +17,8 @@ class HealthResponse(BaseModel):
 
 
 class ModelResult(BaseModel):
+    model_config = {"from_attributes": True}
+
     source: str
     model_id: str
     model_name: str
@@ -39,26 +41,7 @@ class ModelResult(BaseModel):
 
 def metadata_to_result(metadata) -> ModelResult:
     """Convert a ModelMetadata dataclass to a ModelResult schema."""
-    return ModelResult(
-        source=metadata.source,
-        model_id=metadata.model_id,
-        model_name=metadata.model_name,
-        author=metadata.author,
-        total_size_bytes=metadata.total_size_bytes,
-        file_count=metadata.file_count,
-        parameter_count=metadata.parameter_count,
-        architecture=metadata.architecture,
-        format=metadata.format,
-        quantization=metadata.quantization,
-        tags=metadata.tags,
-        license=metadata.license,
-        downloads=metadata.downloads,
-        likes=metadata.likes,
-        created_at=metadata.created_at,
-        updated_at=metadata.updated_at,
-        web_url=metadata.web_url,
-        repo_url=metadata.repo_url,
-    )
+    return ModelResult.model_validate(metadata)
 
 
 # --- Search ---

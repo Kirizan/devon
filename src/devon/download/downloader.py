@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from typing import Callable, List, Optional
 
 from devon.sources.base import ModelSource
@@ -40,8 +41,6 @@ class DownloadManager:
 
         # Get metadata for registration
         model_info = source.get_model_info(model_id)
-
-        from dataclasses import asdict
 
         self.storage.register_model(
             source=source_name,
