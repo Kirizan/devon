@@ -165,11 +165,7 @@ class HuggingFaceSource(ModelSource):
         # Sum file sizes from HF siblings list. Entries may lack a .size
         # attribute (older API responses) or have size=0 (metadata-only files).
         # Both are excluded so that total_size reflects only real content.
-        total_size = sum(
-            s.size
-            for s in (hf_model.siblings or [])
-            if hasattr(s, "size") and s.size
-        )
+        total_size = sum(s.size for s in (hf_model.siblings or []) if hasattr(s, "size") and s.size)
         architecture = self._extract_architecture(hf_model.tags or [])
         formats = self._detect_formats(hf_model.siblings or [])
         quantization = self._detect_quantization(

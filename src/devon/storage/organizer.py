@@ -35,9 +35,7 @@ class ModelStorage:
         resolved = path.resolve()
         base_resolved = self.base_path.resolve()
         if not str(resolved).startswith(str(base_resolved) + "/") and resolved != base_resolved:
-            raise ValueError(
-                f"Path traversal detected: {path} resolves outside {self.base_path}"
-            )
+            raise ValueError(f"Path traversal detected: {path} resolves outside {self.base_path}")
         return resolved
 
     def get_model_path(self, source: str, model_id: str) -> Path:

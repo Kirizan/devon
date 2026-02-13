@@ -101,6 +101,7 @@ def download(model_identifier, source, force, include, yes):
         allow_patterns = list(include) if include else None
         if allow_patterns:
             import re
+
             for pat in allow_patterns:
                 if ".." in pat or not re.match(r"^[a-zA-Z0-9_.*?\-\[\]/]+$", pat):
                     console.print(f"[red]Error: Invalid include pattern: {pat!r}[/red]")

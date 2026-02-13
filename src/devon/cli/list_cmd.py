@@ -39,9 +39,7 @@ def list_models(source):
 
     for model in models:
         try:
-            downloaded = datetime.fromisoformat(model["downloaded_at"]).strftime(
-                "%Y-%m-%d %H:%M"
-            )
+            downloaded = datetime.fromisoformat(model["downloaded_at"]).strftime("%Y-%m-%d %H:%M")
         except (ValueError, TypeError):
             downloaded = model.get("downloaded_at", "unknown")[:16]
         size = format_bytes(model["size_bytes"])
