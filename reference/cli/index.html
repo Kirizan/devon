@@ -16,7 +16,7 @@
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../configuration/">
+        <link rel="next" href="../rest-api/">
       
       
         
@@ -578,6 +578,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -723,6 +727,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/kitt-integration/" class="md-nav__link">
         
   
@@ -792,6 +852,8 @@
       
         
           
+        
+      
         
       
         
@@ -929,6 +991,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1332,6 +1422,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#status" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1368,7 +1469,7 @@
 
 
 <h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
-<p>DEVON exposes eight commands through the <code>devon</code> entry point:</p>
+<p>DEVON exposes nine commands through the <code>devon</code> entry point:</p>
 <table>
 <thead>
 <tr>
@@ -1408,6 +1509,10 @@
 <tr>
 <td><code>devon remove</code></td>
 <td>Delete a specific model from the vault</td>
+</tr>
+<tr>
+<td><code>devon serve</code></td>
+<td>Start the REST API server</td>
 </tr>
 </tbody>
 </table>
@@ -1770,10 +1875,56 @@
 </tr>
 </tbody>
 </table>
+<h4 id="serve">serve<a class="headerlink" href="#serve" title="Permanent link">&para;</a></h4>
+<p>Start the DEVON REST API server.</p>
+<p>Requires the 'api' extras: poetry install --extras api</p>
+<p>Examples:
+  devon serve
+  devon serve --host 0.0.0.0 --port 9000</p>
+<p><strong>Usage:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>devon serve [OPTIONS]
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--host</code></td>
+<td>text</td>
+<td>Bind address</td>
+<td><code>127.0.0.1</code></td>
+</tr>
+<tr>
+<td><code>--port</code></td>
+<td>integer</td>
+<td>Port number</td>
+<td><code>8000</code></td>
+</tr>
+<tr>
+<td><code>--reload</code></td>
+<td>boolean</td>
+<td>Enable auto-reload (dev only)</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>boolean</td>
+<td>Show this message and exit.</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
 <h4 id="status">status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h4>
 <p>Show storage status and statistics.</p>
 <p><strong>Usage:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>devon status [OPTIONS]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>devon status [OPTIONS]
 </code></pre></div>
 <p><strong>Options:</strong></p>
 <table>

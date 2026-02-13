@@ -576,6 +576,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -721,6 +725,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../guides/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../guides/kitt-integration/" class="md-nav__link">
         
   
@@ -788,6 +848,8 @@
       
         
           
+        
+      
         
       
         
@@ -917,6 +979,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1244,6 +1334,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1289,6 +1390,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1321,6 +1433,27 @@
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p>All notable changes to DEVON are documented in this file.</p>
+<h2 id="110">1.1.0<a class="headerlink" href="#110" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>REST API</strong> — FastAPI server exposed via <code>devon serve</code><ul>
+<li>Endpoints: health, search, models (list/info/delete), downloads, storage (status/clean/export)</li>
+<li>Optional bearer token authentication via <code>DEVON_API_KEY</code></li>
+<li>App factory with lifespan for shared Settings and ModelStorage</li>
+</ul>
+</li>
+<li><strong>Docker support</strong> — multi-stage Dockerfile and docker-compose.yml<ul>
+<li>Single <code>/data</code> volume mount for models, index, and config</li>
+<li>Non-root <code>devon</code> user, built-in healthcheck</li>
+<li>Configurable via <code>DEVON_PORT</code>, <code>DEVON_DATA_PATH</code>, <code>DEVON_API_KEY</code>, <code>HF_TOKEN</code></li>
+</ul>
+</li>
+<li><strong><code>devon serve</code> command</strong> — start the API server from the CLI<ul>
+<li><code>--host</code>, <code>--port</code>, <code>--reload</code> options</li>
+<li>Graceful error if API extras are not installed</li>
+</ul>
+</li>
+<li><strong>Optional <code>api</code> extras</strong> — <code>poetry install --extras api</code> adds FastAPI and Uvicorn without affecting CLI-only installs</li>
+</ul>
 <h2 id="100">1.0.0<a class="headerlink" href="#100" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Initial release</li>

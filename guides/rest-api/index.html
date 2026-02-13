@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://kirizan.github.io/devon/guides/kitt-integration/">
+        <link rel="canonical" href="https://kirizan.github.io/devon/guides/rest-api/">
       
       
-        <link rel="prev" href="../docker/">
+        <link rel="prev" href="../managing/">
       
       
-        <link rel="next" href="../configuration/">
+        <link rel="next" href="../docker/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>KITT Integration - DEVON Documentation</title>
+        <title>REST API - DEVON Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kitt-integration" class="md-skip">
+        <a href="#rest-api" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              KITT Integration
+              REST API
             
           </span>
         </div>
@@ -729,10 +729,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../rest-api/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -748,6 +775,219 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#starting-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting the Server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoint Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-for-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search for models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-local-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List local models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-model-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get model info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Download a model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete a model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean-unused-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean unused models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-model-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export model list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -785,37 +1025,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    KITT Integration
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../kitt-integration/" class="md-nav__link">
         
   
   
@@ -831,103 +1044,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exporting-for-kitt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exporting for KITT
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exporting-as-json" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exporting as JSON
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-the-export-with-kitt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using the Export with KITT
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#full-workflow-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full Workflow Example
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remote-integration-via-rest-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remote Integration via REST API
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Reading
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1452,10 +1568,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Prerequisites
       
     </span>
   </a>
@@ -1463,10 +1579,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-for-kitt" class="md-nav__link">
+  <a href="#starting-the-server" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting for KITT
+        Starting the Server
       
     </span>
   </a>
@@ -1474,10 +1590,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-as-json" class="md-nav__link">
+  <a href="#authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting as JSON
+        Authentication
       
     </span>
   </a>
@@ -1485,10 +1601,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-export-with-kitt" class="md-nav__link">
+  <a href="#endpoint-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using the Export with KITT
+        Endpoint Overview
       
     </span>
   </a>
@@ -1496,10 +1612,126 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-workflow-example" class="md-nav__link">
+  <a href="#usage-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Workflow Example
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-for-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search for models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-local-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List local models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-model-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get model info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Download a model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete a model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean-unused-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean unused models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-model-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export model list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
       
     </span>
   </a>
@@ -1507,10 +1739,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#remote-integration-via-rest-api" class="md-nav__link">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Remote Integration via REST API
+        Limitations
       
     </span>
   </a>
@@ -1548,76 +1780,232 @@
   
 
 
-<h1 id="kitt-integration">KITT Integration<a class="headerlink" href="#kitt-integration" title="Permanent link">&para;</a></h1>
-<p>DEVON and KITT are companion tools. DEVON manages the models. KITT tests
-them. Together they form a workflow for downloading models and running
-inference benchmarks.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p><a href="https://kirizan.github.io/kitt/">KITT</a> is an inference engine testing
-suite that measures model performance across different serving backends.
-DEVON's export command produces output in formats that KITT can consume
+<h1 id="rest-api">REST API<a class="headerlink" href="#rest-api" title="Permanent link">&para;</a></h1>
+<p>DEVON includes a FastAPI-based REST API server that exposes every core
+capability over HTTP. Use it when you need to manage models remotely --
+for example, from KITT or a CI pipeline -- without installing DEVON on
+the client machine.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Install the optional API dependencies:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>poetry<span class="w"> </span>install<span class="w"> </span>--extras<span class="w"> </span>api
+</code></pre></div>
+<p>This adds FastAPI and Uvicorn. The standard CLI continues to work without
+these extras.</p>
+<h2 id="starting-the-server">Starting the Server<a class="headerlink" href="#starting-the-server" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>devon<span class="w"> </span>serve<span class="w">                             </span><span class="c1"># http://127.0.0.1:8000</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>devon<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">9000</span><span class="w"> </span><span class="c1"># bind to all interfaces</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>devon<span class="w"> </span>serve<span class="w"> </span>--reload<span class="w">                    </span><span class="c1"># auto-reload on code changes (dev)</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For containerized deployments, see the
+<a href="../docker/">Docker Deployment</a> guide instead of running <code>devon serve</code>
 directly.</p>
-<h2 id="exporting-for-kitt">Exporting for KITT<a class="headerlink" href="#exporting-for-kitt" title="Permanent link">&para;</a></h2>
-<p>Generate a text file listing local model paths, one per line:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>kitt<span class="w"> </span>-o<span class="w"> </span>models.txt
+</div>
+<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
+<p>Authentication is <strong>optional</strong>. Set the <code>DEVON_API_KEY</code> environment variable
+to enable bearer token auth on all <code>/api/v1/*</code> endpoints. The <code>/health</code>
+endpoint is always unauthenticated.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">DEVON_API_KEY</span><span class="o">=</span>my-secret<span class="w"> </span>devon<span class="w"> </span>serve
 </code></pre></div>
-<p>The resulting <code>models.txt</code> file contains absolute paths to each
-downloaded model directory, ready for KITT to read.</p>
-<h2 id="exporting-as-json">Exporting as JSON<a class="headerlink" href="#exporting-as-json" title="Permanent link">&para;</a></h2>
-<p>For programmatic consumption, export the full model index as JSON:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-o<span class="w"> </span>models.json
+<p>Clients pass the token in the <code>Authorization</code> header:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer my-secret&quot;</span><span class="w"> </span>http://localhost:8000/api/v1/models
 </code></pre></div>
-<p>The JSON output includes model IDs, sources, file sizes, download dates,
-and local paths.</p>
-<h2 id="using-the-export-with-kitt">Using the Export with KITT<a class="headerlink" href="#using-the-export-with-kitt" title="Permanent link">&para;</a></h2>
-<p>Pass the exported file to KITT's <code>--model-list</code> flag along with your
-desired engine and test suite:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kitt<span class="w"> </span>run<span class="w"> </span>--model-list<span class="w"> </span>models.txt<span class="w"> </span>--engine<span class="w"> </span>vllm<span class="w"> </span>--suite<span class="w"> </span>standard
+<p>When <code>DEVON_API_KEY</code> is unset or empty, all requests are allowed without a
+token.</p>
+<h2 id="endpoint-overview">Endpoint Overview<a class="headerlink" href="#endpoint-overview" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/health</code></td>
+<td>Health check (no auth)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/search</code></td>
+<td>Search remote models</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/models</code></td>
+<td>List local models</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/models/{source}/{model_id}</code></td>
+<td>Model info (local + remote)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/v1/models/{source}/{model_id}</code></td>
+<td>Remove a model</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/downloads</code></td>
+<td>Download a model</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/status</code></td>
+<td>Storage stats</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/clean</code></td>
+<td>Clean unused models</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/export</code></td>
+<td>Export model list</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="../../reference/rest-api/">REST API Reference</a> for full request and
+response schemas.</p>
+<hr />
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<h3 id="health-check">Health check<a class="headerlink" href="#health-check" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>http://localhost:8000/health
 </code></pre></div>
-<p>KITT reads each path from the file and runs the specified test suite
-against every model in sequence.</p>
-<h2 id="full-workflow-example">Full Workflow Example<a class="headerlink" href="#full-workflow-example" title="Permanent link">&para;</a></h2>
-<p>A typical workflow from discovery to testing:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 1. Search for candidate models</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>devon<span class="w"> </span>search<span class="w"> </span><span class="s2">&quot;qwen instruct&quot;</span><span class="w"> </span>--params<span class="w"> </span>7b<span class="w"> </span>--format<span class="w"> </span>gguf
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># 2. Download the ones you want</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>devon<span class="w"> </span>download<span class="w"> </span>Qwen/Qwen2.5-7B-Instruct
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># 3. Export paths for KITT</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>kitt<span class="w"> </span>-o<span class="w"> </span>models.txt
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># 4. Run inference tests</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>kitt<span class="w"> </span>run<span class="w"> </span>--model-list<span class="w"> </span>models.txt<span class="w"> </span>--engine<span class="w"> </span>vllm<span class="w"> </span>--suite<span class="w"> </span>standard
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">}</span>
 </code></pre></div>
-<p>This pattern scales to any number of models. Download as many as you
-need, export once, and KITT tests them all.</p>
-<h2 id="remote-integration-via-rest-api">Remote Integration via REST API<a class="headerlink" href="#remote-integration-via-rest-api" title="Permanent link">&para;</a></h2>
-<p>When DEVON runs as a containerized API server, KITT (or any client) can
-manage models over HTTP without requiring DEVON to be installed locally:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Search for models</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span><span class="s2">&quot;http://devon-host:8000/api/v1/search?provider=qwen&amp;limit=5&quot;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Download a model</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://devon-host:8000/api/v1/downloads<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model_id&quot;: &quot;Qwen/Qwen2.5-7B-Instruct&quot;}&#39;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Export model paths</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://devon-host:8000/api/v1/export<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;format&quot;: &quot;kitt&quot;}&#39;</span>
+<h3 id="search-for-models">Search for models<a class="headerlink" href="#search-for-models" title="Permanent link">&para;</a></h3>
+<p>Query parameters mirror the CLI's <code>--provider</code>, <code>--params</code>, <code>--size</code>,
+<code>--format</code>, <code>--task</code>, <code>--license</code>, and <code>--limit</code> flags:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/search?provider=qwen&amp;params=7b&amp;limit=3&quot;</span>
 </code></pre></div>
-<p>See the <a href="../rest-api/">REST API guide</a> and
-<a href="../docker/">Docker Deployment guide</a> for setup details.</p>
+<h3 id="list-local-models">List local models<a class="headerlink" href="#list-local-models" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/models
+</code></pre></div>
+<p>Filter by source:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/models?source=huggingface&quot;</span>
+</code></pre></div>
+<h3 id="get-model-info">Get model info<a class="headerlink" href="#get-model-info" title="Permanent link">&para;</a></h3>
+<p>Returns both local storage info and remote metadata:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/models/huggingface/Qwen/Qwen2.5-7B-Instruct
+</code></pre></div>
+<h3 id="download-a-model">Download a model<a class="headerlink" href="#download-a-model" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/downloads<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model_id&quot;: &quot;Qwen/Qwen2.5-7B-Instruct&quot;}&#39;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Long-running request</p>
+<p>Downloads run synchronously in the request thread. Set a long client
+timeout (e.g., 30 minutes) for large models.</p>
+</div>
+<p>Optional fields in the request body:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_id</code></td>
+<td>string</td>
+<td><em>(required)</em></td>
+<td>Model identifier</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>string</td>
+<td><code>"huggingface"</code></td>
+<td>Source plugin name</td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>Re-download even if already present</td>
+</tr>
+<tr>
+<td><code>include_patterns</code></td>
+<td>list[string]</td>
+<td><code>null</code></td>
+<td>Glob patterns to filter files</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-a-model">Delete a model<a class="headerlink" href="#delete-a-model" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:8000/api/v1/models/huggingface/Qwen/Qwen2.5-7B-Instruct
+</code></pre></div>
+<h3 id="storage-status">Storage status<a class="headerlink" href="#storage-status" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/status
+</code></pre></div>
+<h3 id="clean-unused-models">Clean unused models<a class="headerlink" href="#clean-unused-models" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30}&#39;</span>
+</code></pre></div>
+<p>Preview without deleting:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30, &quot;dry_run&quot;: true}&#39;</span>
+</code></pre></div>
+<h3 id="export-model-list">Export model list<a class="headerlink" href="#export-model-list" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/export<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;format&quot;: &quot;kitt&quot;}&#39;</span>
+</code></pre></div>
+<hr />
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<p>The API server respects these environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEVON_API_KEY</code></td>
+<td>Bearer token for authentication (empty = no auth)</td>
+</tr>
+<tr>
+<td><code>DEVON_STORAGE_PATH</code></td>
+<td>Override the model storage directory</td>
+</tr>
+<tr>
+<td><code>DEVON_CONFIG_PATH</code></td>
+<td>Override the config file path</td>
+</tr>
+<tr>
+<td><code>HF_TOKEN</code></td>
+<td>HuggingFace token for gated model access</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Single worker</strong> — the default runs one Uvicorn worker to avoid race
+  conditions on JSON index writes. Do not increase worker count without
+  external write coordination.</li>
+<li><strong>Synchronous downloads</strong> — model downloads block the request thread.
+  Background task support may be added in a future release.</li>
+</ul>
+<hr />
 <h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://kirizan.github.io/kitt/">KITT documentation</a></li>
-<li><a href="../searching/">Searching for models</a></li>
-<li><a href="../downloading/">Downloading models</a></li>
-<li><a href="../managing/">Managing local models</a></li>
-<li><a href="../rest-api/">REST API</a></li>
-<li><a href="../docker/">Docker Deployment</a></li>
+<li><a href="../../reference/rest-api/">REST API Reference</a> -- full request/response schemas</li>
+<li><a href="../docker/">Docker Deployment</a> -- containerized deployment</li>
+<li><a href="../kitt-integration/">KITT Integration</a> -- using the API with KITT</li>
 </ul>
 
 

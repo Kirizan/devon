@@ -578,6 +578,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -723,6 +727,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/kitt-integration/" class="md-nav__link">
         
   
@@ -790,6 +850,8 @@
       
         
           
+        
+      
         
       
         
@@ -919,6 +981,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1476,8 +1566,9 @@ full entry schema.</p>
   machine is enough to move the entire vault.</li>
 </ul>
 <p>The trade-off is that concurrent writes from multiple processes are not
-safe without coordination, but DEVON is a single-user CLI tool where this
-is not a practical concern.</p>
+safe without coordination. For CLI use this is not a practical concern.
+When running the REST API server, DEVON defaults to a <strong>single Uvicorn
+worker</strong> to avoid index corruption from concurrent writes.</p>
 <h2 id="atomic-operations">Atomic Operations<a class="headerlink" href="#atomic-operations" title="Permanent link">&para;</a></h2>
 <p>The <code>ModelStorage</code> class uses a <strong>read-modify-write</strong> pattern with file
 locking:</p>

@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://kirizan.github.io/devon/guides/kitt-integration/">
+        <link rel="canonical" href="https://kirizan.github.io/devon/guides/docker/">
       
       
-        <link rel="prev" href="../docker/">
+        <link rel="prev" href="../rest-api/">
       
       
-        <link rel="next" href="../configuration/">
+        <link rel="next" href="../kitt-integration/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>KITT Integration - DEVON Documentation</title>
+        <title>Docker Deployment - DEVON Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kitt-integration" class="md-skip">
+        <a href="#docker-deployment" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              KITT Integration
+              Docker Deployment
             
           </span>
         </div>
@@ -757,34 +757,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../docker/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Docker Deployment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -804,7 +776,7 @@
   <span class="md-ellipsis">
     
   
-    KITT Integration
+    Docker Deployment
   
 
     
@@ -822,7 +794,7 @@
   <span class="md-ellipsis">
     
   
-    KITT Integration
+    Docker Deployment
   
 
     
@@ -848,10 +820,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Quick Start
       
     </span>
   </a>
@@ -859,10 +831,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-for-kitt" class="md-nav__link">
+  <a href="#container-layout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting for KITT
+        Container Layout
       
     </span>
   </a>
@@ -870,10 +842,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-as-json" class="md-nav__link">
+  <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting as JSON
+        Environment Variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Image
       
     </span>
   </a>
@@ -881,10 +881,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-export-with-kitt" class="md-nav__link">
+  <a href="#health-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using the Export with KITT
+        Health Check
       
     </span>
   </a>
@@ -892,10 +892,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-workflow-example" class="md-nav__link">
+  <a href="#using-your-existing-models" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Workflow Example
+        Using Your Existing Models
       
     </span>
   </a>
@@ -903,10 +903,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#remote-integration-via-rest-api" class="md-nav__link">
+  <a href="#stopping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Remote Integration via REST API
+        Stopping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Tips
       
     </span>
   </a>
@@ -928,6 +939,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kitt-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KITT Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1452,10 +1491,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Quick Start
       
     </span>
   </a>
@@ -1463,10 +1502,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-for-kitt" class="md-nav__link">
+  <a href="#container-layout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting for KITT
+        Container Layout
       
     </span>
   </a>
@@ -1474,10 +1513,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#exporting-as-json" class="md-nav__link">
+  <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exporting as JSON
+        Environment Variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Image
       
     </span>
   </a>
@@ -1485,10 +1552,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-export-with-kitt" class="md-nav__link">
+  <a href="#health-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using the Export with KITT
+        Health Check
       
     </span>
   </a>
@@ -1496,10 +1563,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-workflow-example" class="md-nav__link">
+  <a href="#using-your-existing-models" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Workflow Example
+        Using Your Existing Models
       
     </span>
   </a>
@@ -1507,10 +1574,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#remote-integration-via-rest-api" class="md-nav__link">
+  <a href="#stopping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Remote Integration via REST API
+        Stopping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Tips
       
     </span>
   </a>
@@ -1548,76 +1626,121 @@
   
 
 
-<h1 id="kitt-integration">KITT Integration<a class="headerlink" href="#kitt-integration" title="Permanent link">&para;</a></h1>
-<p>DEVON and KITT are companion tools. DEVON manages the models. KITT tests
-them. Together they form a workflow for downloading models and running
-inference benchmarks.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p><a href="https://kirizan.github.io/kitt/">KITT</a> is an inference engine testing
-suite that measures model performance across different serving backends.
-DEVON's export command produces output in formats that KITT can consume
-directly.</p>
-<h2 id="exporting-for-kitt">Exporting for KITT<a class="headerlink" href="#exporting-for-kitt" title="Permanent link">&para;</a></h2>
-<p>Generate a text file listing local model paths, one per line:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>kitt<span class="w"> </span>-o<span class="w"> </span>models.txt
+<h1 id="docker-deployment">Docker Deployment<a class="headerlink" href="#docker-deployment" title="Permanent link">&para;</a></h1>
+<p>DEVON ships with a Dockerfile and docker-compose.yml for running the REST
+API as a container. This is the recommended approach when you want KITT or
+other remote clients to manage models over HTTP.</p>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>curl<span class="w"> </span>http://localhost:8000/health
 </code></pre></div>
-<p>The resulting <code>models.txt</code> file contains absolute paths to each
-downloaded model directory, ready for KITT to read.</p>
-<h2 id="exporting-as-json">Exporting as JSON<a class="headerlink" href="#exporting-as-json" title="Permanent link">&para;</a></h2>
-<p>For programmatic consumption, export the full model index as JSON:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-o<span class="w"> </span>models.json
+<p>That's it. Models are stored in a Docker named volume (<code>devon-data</code>) by
+default.</p>
+<h2 id="container-layout">Container Layout<a class="headerlink" href="#container-layout" title="Permanent link">&para;</a></h2>
+<p>The container maps everything under a single <code>/data</code> directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>/data/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── models/       # Downloaded model files
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── index.json    # Storage index
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└── config.yaml   # Configuration (optional)
 </code></pre></div>
-<p>The JSON output includes model IDs, sources, file sizes, download dates,
-and local paths.</p>
-<h2 id="using-the-export-with-kitt">Using the Export with KITT<a class="headerlink" href="#using-the-export-with-kitt" title="Permanent link">&para;</a></h2>
-<p>Pass the exported file to KITT's <code>--model-list</code> flag along with your
-desired engine and test suite:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kitt<span class="w"> </span>run<span class="w"> </span>--model-list<span class="w"> </span>models.txt<span class="w"> </span>--engine<span class="w"> </span>vllm<span class="w"> </span>--suite<span class="w"> </span>standard
+<p>Mount a single host path to cover all three:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w">  </span><span class="c1"># uses named volume by default</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># or</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">DEVON_DATA_PATH</span><span class="o">=</span>/mnt/models<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w">  </span><span class="c1"># uses host path</span>
 </code></pre></div>
-<p>KITT reads each path from the file and runs the specified test suite
-against every model in sequence.</p>
-<h2 id="full-workflow-example">Full Workflow Example<a class="headerlink" href="#full-workflow-example" title="Permanent link">&para;</a></h2>
-<p>A typical workflow from discovery to testing:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 1. Search for candidate models</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>devon<span class="w"> </span>search<span class="w"> </span><span class="s2">&quot;qwen instruct&quot;</span><span class="w"> </span>--params<span class="w"> </span>7b<span class="w"> </span>--format<span class="w"> </span>gguf
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># 2. Download the ones you want</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>devon<span class="w"> </span>download<span class="w"> </span>Qwen/Qwen2.5-7B-Instruct
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># 3. Export paths for KITT</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>devon<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--format<span class="w"> </span>kitt<span class="w"> </span>-o<span class="w"> </span>models.txt
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># 4. Run inference tests</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>kitt<span class="w"> </span>run<span class="w"> </span>--model-list<span class="w"> </span>models.txt<span class="w"> </span>--engine<span class="w"> </span>vllm<span class="w"> </span>--suite<span class="w"> </span>standard
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEVON_PORT</code></td>
+<td><code>8000</code></td>
+<td>Host port mapped to the container</td>
+</tr>
+<tr>
+<td><code>DEVON_DATA_PATH</code></td>
+<td><code>devon-data</code> (named volume)</td>
+<td>Host path or named volume for <code>/data</code></td>
+</tr>
+<tr>
+<td><code>DEVON_API_KEY</code></td>
+<td><em>(empty)</em></td>
+<td>Bearer token for API auth. Empty disables auth</td>
+</tr>
+<tr>
+<td><code>HF_TOKEN</code></td>
+<td><em>(empty)</em></td>
+<td>HuggingFace token for gated model access</td>
+</tr>
+</tbody>
+</table>
+<p>Set variables in a <code>.env</code> file next to <code>docker-compose.yml</code> or export them
+in your shell.</p>
+<h3 id="example-env">Example <code>.env</code><a class="headerlink" href="#example-env" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>DEVON_PORT=9000
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>DEVON_DATA_PATH=/mnt/nvme/devon
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>DEVON_API_KEY=my-secret-token
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>HF_TOKEN=hf_abc123
 </code></pre></div>
-<p>This pattern scales to any number of models. Download as many as you
-need, export once, and KITT tests them all.</p>
-<h2 id="remote-integration-via-rest-api">Remote Integration via REST API<a class="headerlink" href="#remote-integration-via-rest-api" title="Permanent link">&para;</a></h2>
-<p>When DEVON runs as a containerized API server, KITT (or any client) can
-manage models over HTTP without requiring DEVON to be installed locally:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Search for models</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span><span class="s2">&quot;http://devon-host:8000/api/v1/search?provider=qwen&amp;limit=5&quot;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Download a model</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://devon-host:8000/api/v1/downloads<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model_id&quot;: &quot;Qwen/Qwen2.5-7B-Instruct&quot;}&#39;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Export model paths</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://devon-host:8000/api/v1/export<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;format&quot;: &quot;kitt&quot;}&#39;</span>
+<h2 id="building-the-image">Building the Image<a class="headerlink" href="#building-the-image" title="Permanent link">&para;</a></h2>
+<p>The Dockerfile uses a multi-stage build:</p>
+<ol>
+<li><strong>Builder stage</strong> — installs Poetry, resolves dependencies with <code>--extras api</code>,
+   and creates an in-project virtualenv.</li>
+<li><strong>Runtime stage</strong> — copies only the virtualenv and source code into a clean
+   <code>python:3.12-slim</code> image. Runs as a non-root <code>devon</code> user.</li>
+</ol>
+<p>Build manually:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>devon<span class="w"> </span>.
 </code></pre></div>
-<p>See the <a href="../rest-api/">REST API guide</a> and
-<a href="../docker/">Docker Deployment guide</a> for setup details.</p>
+<p>Run manually (without Compose):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--name<span class="w"> </span>devon<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>-v<span class="w"> </span>/mnt/models:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DEVON_API_KEY</span><span class="o">=</span>secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">HF_TOKEN</span><span class="o">=</span>hf_abc123<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span>devon
+</code></pre></div>
+<h2 id="health-check">Health Check<a class="headerlink" href="#health-check" title="Permanent link">&para;</a></h2>
+<p>The container includes a built-in Docker healthcheck that hits
+<code>http://localhost:8000/health</code> every 30 seconds. Check container health:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>inspect<span class="w"> </span>--format<span class="o">=</span><span class="s1">&#39;{{.State.Health.Status}}&#39;</span><span class="w"> </span>devon
+</code></pre></div>
+<h2 id="using-your-existing-models">Using Your Existing Models<a class="headerlink" href="#using-your-existing-models" title="Permanent link">&para;</a></h2>
+<p>If you already have models downloaded on the host, mount their parent
+directory as <code>/data</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">DEVON_DATA_PATH</span><span class="o">=</span>/home/user/.cache/devon<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>The container reads the existing <code>index.json</code> and serves models
+immediately.</p>
+<h2 id="stopping">Stopping<a class="headerlink" href="#stopping" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w">       </span><span class="c1"># stop and remove container (data volume preserved)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>-v<span class="w">    </span><span class="c1"># stop and remove container AND named volume</span>
+</code></pre></div>
+<h2 id="production-tips">Production Tips<a class="headerlink" href="#production-tips" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Single worker</strong> — the default runs one Uvicorn worker. This avoids
+  race conditions on the JSON index. Do not increase worker count without
+  external write coordination.</li>
+<li><strong>Set <code>DEVON_API_KEY</code></strong> — in production, always set an API key to prevent
+  unauthorized access.</li>
+<li><strong>Use host path mounts for persistence</strong> — named volumes work but host
+  paths make backups and migration easier.</li>
+<li><strong>Set <code>HF_TOKEN</code></strong> — required for downloading gated models (Llama, etc.).</li>
+</ul>
+<hr />
 <h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://kirizan.github.io/kitt/">KITT documentation</a></li>
-<li><a href="../searching/">Searching for models</a></li>
-<li><a href="../downloading/">Downloading models</a></li>
-<li><a href="../managing/">Managing local models</a></li>
-<li><a href="../rest-api/">REST API</a></li>
-<li><a href="../docker/">Docker Deployment</a></li>
+<li><a href="../rest-api/">REST API Guide</a> -- endpoint usage and examples</li>
+<li><a href="../../reference/rest-api/">REST API Reference</a> -- full request/response schemas</li>
+<li><a href="../configuration/">Configuration</a> -- YAML config options</li>
 </ul>
 
 

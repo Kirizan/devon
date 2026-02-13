@@ -636,10 +636,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#no-docker-required" class="md-nav__link">
+  <a href="#api-extras-optional" class="md-nav__link">
     <span class="md-ellipsis">
       
-        No Docker Required
+        API Extras (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker (Optional)
       
     </span>
   </a>
@@ -712,6 +723,10 @@
       
         
           
+        
+      
+        
+      
         
       
         
@@ -869,6 +884,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/kitt-integration/" class="md-nav__link">
         
   
@@ -936,6 +1007,8 @@
       
         
           
+        
+      
         
       
         
@@ -1065,6 +1138,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/rest-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1451,10 +1552,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#no-docker-required" class="md-nav__link">
+  <a href="#api-extras-optional" class="md-nav__link">
     <span class="md-ellipsis">
       
-        No Docker Required
+        API Extras (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker (Optional)
       
     </span>
   </a>
@@ -1575,9 +1687,15 @@ your shell can find the <code>devon</code> command.</p>
 <p>If the command is not found, make sure you have activated the virtual environment
 (Option 1) or are using <code>poetry run</code> (Option 2).</p>
 <hr />
-<h2 id="no-docker-required">No Docker Required<a class="headerlink" href="#no-docker-required" title="Permanent link">&para;</a></h2>
-<p>Unlike KITT, which uses Docker containers to run inference engines, DEVON runs
-entirely as a native Python CLI. There are no containers to pull or manage.</p>
+<h2 id="api-extras-optional">API Extras (Optional)<a class="headerlink" href="#api-extras-optional" title="Permanent link">&para;</a></h2>
+<p>To use the REST API server (<code>devon serve</code>), install the optional API
+dependencies:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>poetry<span class="w"> </span>install<span class="w"> </span>--extras<span class="w"> </span>api
+</code></pre></div>
+<p>This adds FastAPI and Uvicorn. The CLI works without these extras.</p>
+<h2 id="docker-optional">Docker (Optional)<a class="headerlink" href="#docker-optional" title="Permanent link">&para;</a></h2>
+<p>DEVON can also run as a containerized REST API. See the
+<a href="../../guides/docker/">Docker Deployment</a> guide for details.</p>
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>Head to the <a href="../first-model/">First Model</a> tutorial to search for a model and
