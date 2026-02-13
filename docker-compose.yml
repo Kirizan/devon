@@ -8,4 +8,11 @@ services:
     environment:
       - DEVON_API_KEY=${DEVON_API_KEY:-}
       - HF_TOKEN=${HF_TOKEN:-}
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
     restart: unless-stopped

@@ -92,6 +92,7 @@ class Settings:
 
     def save(self) -> None:
         """Save current config to disk."""
-        self.config_path.parent.mkdir(parents=True, exist_ok=True)
+        self.config_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
         with open(self.config_path, "w") as f:
             yaml.dump(self._config, f, default_flow_style=False)
+        self.config_path.chmod(0o600)
