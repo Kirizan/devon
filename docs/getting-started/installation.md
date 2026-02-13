@@ -92,10 +92,21 @@ If the command is not found, make sure you have activated the virtual environmen
 
 ---
 
-## No Docker Required
+## API Extras (Optional)
 
-Unlike KITT, which uses Docker containers to run inference engines, DEVON runs
-entirely as a native Python CLI. There are no containers to pull or manage.
+To use the REST API server (`devon serve`), install the optional API
+dependencies:
+
+```bash
+poetry install --extras api
+```
+
+This adds FastAPI and Uvicorn. The CLI works without these extras.
+
+## Docker (Optional)
+
+DEVON can also run as a containerized REST API. See the
+[Docker Deployment](../guides/docker.md) guide for details.
 
 ---
 

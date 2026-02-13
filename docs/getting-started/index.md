@@ -24,5 +24,6 @@ understanding of the core workflow.
 | git | any recent version |
 
 !!! note
-    Unlike KITT, DEVON does not require Docker. It runs natively on your system
-    using only Python and Poetry.
+    The CLI does not require Docker. If you want to run DEVON as a
+    containerized REST API, see the [Docker Deployment](../guides/docker.md)
+    guide.

@@ -20,6 +20,16 @@ patterns, and manage disk space.
 List, inspect, and remove downloaded models. Monitor storage usage and
 clean up unused files.
 
+### [REST API](rest-api.md)
+
+Start a FastAPI server with `devon serve` and manage models over HTTP.
+Covers authentication, endpoint usage, and integration patterns.
+
+### [Docker Deployment](docker.md)
+
+Run DEVON as a containerized API server. Covers building the image,
+volume mounts, environment variables, and production tips.
+
 ### [KITT Integration](kitt-integration.md)
 
 Export your local model library for use with KITT, the inference engine

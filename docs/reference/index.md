@@ -11,6 +11,9 @@ a configuration key, or the shape of stored data.
 - **[CLI Reference](cli/index.md)** -- Every command, option, and argument
   exposed by the `devon` CLI.
 
+- **[REST API Reference](rest-api.md)** -- Endpoint paths, request/response
+  schemas, authentication, and error codes for the DEVON REST API.
+
 - **[Configuration Schema](configuration.md)** -- All keys accepted in
   `~/.config/devon/config.yaml`, their types, and default values.
 

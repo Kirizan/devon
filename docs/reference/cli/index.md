@@ -1,6 +1,6 @@
 # CLI Reference
 
-DEVON exposes eight commands through the `devon` entry point:
+DEVON exposes nine commands through the `devon` entry point:
 
 | Command | Purpose |
 |---------|---------|
@@ -12,6 +12,7 @@ DEVON exposes eight commands through the `devon` entry point:
 | `devon clean` | Remove unused or all cached models |
 | `devon export` | Export model paths for KITT or JSON |
 | `devon remove` | Delete a specific model from the vault |
+| `devon serve` | Start the REST API server |
 
 All commands support `--help` for inline usage information.
 

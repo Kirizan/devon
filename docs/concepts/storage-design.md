@@ -54,8 +54,9 @@ full entry schema.
   machine is enough to move the entire vault.
 
 The trade-off is that concurrent writes from multiple processes are not
-safe without coordination, but DEVON is a single-user CLI tool where this
-is not a practical concern.
+safe without coordination. For CLI use this is not a practical concern.
+When running the REST API server, DEVON defaults to a **single Uvicorn
+worker** to avoid index corruption from concurrent writes.
 
 ## Atomic Operations
 
