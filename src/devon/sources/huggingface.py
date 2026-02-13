@@ -11,6 +11,20 @@ from devon.sources.registry import register_source
 
 logger = logging.getLogger(__name__)
 
+_SAFE_PATTERN_RE = re.compile(r"^[a-zA-Z0-9_.*?\-\[\]/]+$")
+
+
+def _validate_patterns(patterns: list[str]) -> list[str]:
+    """Validate glob patterns. Reject path traversal or unsafe characters."""
+    validated = []
+    for pat in patterns:
+        if ".." in pat:
+            raise ValueError(f"Pattern contains path traversal: {pat!r}")
+        if not _SAFE_PATTERN_RE.match(pat):
+            raise ValueError(f"Pattern contains unsafe characters: {pat!r}")
+        validated.append(pat)
+    return validated
+
 
 @register_source
 class HuggingFaceSource(ModelSource):
@@ -30,6 +44,7 @@ class HuggingFaceSource(ModelSource):
             list(api.list_models(limit=1))
             return True
         except Exception:
+            logger.debug("HuggingFace API not available", exc_info=True)
             return False
 
     def search(
@@ -115,7 +130,9 @@ class HuggingFaceSource(ModelSource):
 
     def _parse_params(self, params_str: str) -> int:
         """Parse '30b' to 30."""
-        match = re.match(r"(\d+)b?", params_str.lower())
+        match = re.match(r"(\d+)\s*b\b", params_str.lower())
+        if not match:
+            match = re.match(r"(\d+)$", params_str.lower().strip())
         return int(match.group(1)) if match else 0
 
     def _parse_size_constraint(self, size_str: str) -> Optional[Dict]:
@@ -145,7 +162,14 @@ class HuggingFaceSource(ModelSource):
     def _convert_to_metadata(self, hf_model) -> ModelMetadata:
         """Convert HF ModelInfo to ModelMetadata."""
         param_count = self._extract_param_count(hf_model)
-        total_size = sum(s.size for s in (hf_model.siblings or []) if hasattr(s, "size") and s.size)
+        # Sum file sizes from HF siblings list. Entries may lack a .size
+        # attribute (older API responses) or have size=0 (metadata-only files).
+        # Both are excluded so that total_size reflects only real content.
+        total_size = sum(
+            s.size
+            for s in (hf_model.siblings or [])
+            if hasattr(s, "size") and s.size
+        )
         architecture = self._extract_architecture(hf_model.tags or [])
         formats = self._detect_formats(hf_model.siblings or [])
         quantization = self._detect_quantization(
@@ -189,12 +213,12 @@ class HuggingFaceSource(ModelSource):
     def _extract_param_count(self, hf_model) -> Optional[int]:
         """Extract parameter count from tags or ID."""
         for tag in hf_model.tags or []:
-            match = re.search(r"(\d+)b", tag.lower())
+            match = re.search(r"(\d+)b\b", tag.lower())
             if match:
                 return int(match.group(1))
 
         model_id = hf_model.id or hf_model.modelId
-        match = re.search(r"(\d+)b", model_id.lower())
+        match = re.search(r"(\d+)b\b", model_id.lower())
         return int(match.group(1)) if match else None
 
     def _extract_architecture(self, tags: List[str]) -> Optional[str]:
@@ -246,7 +270,7 @@ class HuggingFaceSource(ModelSource):
             "local_dir": dest_path,
         }
         if allow_patterns:
-            download_kwargs["allow_patterns"] = allow_patterns
+            download_kwargs["allow_patterns"] = _validate_patterns(allow_patterns)
 
         downloaded_path = snapshot_download(**download_kwargs)
 
