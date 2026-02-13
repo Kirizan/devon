@@ -1,5 +1,6 @@
 """Shared FastAPI dependencies for the DEVON API."""
 
+import hmac
 import os
 from typing import Annotated
 
@@ -55,7 +56,7 @@ async def verify_api_key(
     if expected == "disable":
         return
 
-    if credentials is None or credentials.credentials != expected:
+    if credentials is None or not hmac.compare_digest(credentials.credentials, expected):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or missing API key",
