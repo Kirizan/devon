@@ -136,6 +136,27 @@ class ExportResponse(BaseModel):
     content: Any
 
 
+# --- Config ---
+
+
+class ConfigResponse(BaseModel):
+    config: Dict[str, Any]
+
+
+class ConfigUpdateRequest(BaseModel):
+    config: Dict[str, Any]
+
+
+class SetupStatusResponse(BaseModel):
+    configured: bool
+    missing: List[str] = Field(default_factory=list)
+
+
+class SecretsUpdateRequest(BaseModel):
+    hf_token: Optional[str] = None
+    api_key: Optional[str] = None
+
+
 # --- Errors ---
 
 
