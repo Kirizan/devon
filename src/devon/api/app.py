@@ -5,10 +5,13 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
+from devon.ui import STATIC_DIR
 
 # Ensure source plugins are registered
 import devon.sources  # noqa: F401
@@ -53,7 +56,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=allowed_origins or ["http://localhost:*"],
-        allow_methods=["GET", "POST", "DELETE"],
+        allow_methods=["GET", "POST", "PUT", "DELETE"],
         allow_headers=["Authorization", "Content-Type"],
         allow_credentials=False,
     )
@@ -84,5 +87,17 @@ def create_app() -> FastAPI:
     app.include_router(download_router)
     app.include_router(storage_router)
     app.include_router(config_router)
+
+    # -- Serve Web UI static files --
+    if STATIC_DIR.is_dir():
+        app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
+
+        @app.get("/{path:path}")
+        async def spa_fallback(request: Request, path: str):
+            """Serve static files or fall back to index.html for SPA routes."""
+            file = STATIC_DIR / path
+            if file.is_file():
+                return FileResponse(file)
+            return FileResponse(STATIC_DIR / "index.html")
 
     return app

@@ -7,6 +7,7 @@ license = "Apache-2.0"
 readme = "README.md"
 keywords = ["llm", "ai", "model-management", "huggingface", "machine-learning"]
 packages = [{include = "devon", from = "src"}]
+include = ["src/devon/ui/static/**/*"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
