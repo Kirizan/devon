@@ -29,8 +29,7 @@ async def update_config(
 ):
     """Update configuration. Secrets in the payload are ignored — use PUT /config/secrets."""
     # Strip secret keys from the update to prevent accidental exposure
-    updates = body.config
-    updates.pop("secrets", None)
+    updates = {k: v for k, v in body.config.items() if k != "secrets"}
 
     settings.update(updates)
     return ConfigResponse(config=settings.to_safe_dict())
