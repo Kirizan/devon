@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-py${{ matrix.python-version }}-poetry-
 
       - name: Install dependencies
-        run: poetry install --with dev
+        run: poetry install --with dev --extras api
 
       - name: Run tests
         run: poetry run pytest tests/ -v --cov=devon --cov-report=xml
@@ -68,7 +68,7 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install dependencies
-        run: poetry install --with dev
+        run: poetry install --with dev --extras api
 
       - name: Check imports
         run: poetry run python -c "import devon; print(f'DEVON v{devon.__version__}')"
