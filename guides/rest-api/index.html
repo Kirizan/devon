@@ -892,10 +892,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#download-a-model" class="md-nav__link">
+  <a href="#start-a-download" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Download a model
+        Start a download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-download-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List download jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-download-job-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get download job status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-a-failed-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restart a failed download
       
     </span>
   </a>
@@ -1668,10 +1701,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#download-a-model" class="md-nav__link">
+  <a href="#start-a-download" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Download a model
+        Start a download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-download-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List download jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-download-job-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get download job status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-a-failed-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restart a failed download
       
     </span>
   </a>
@@ -1803,16 +1869,22 @@ these extras.</p>
 directly.</p>
 </div>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>Authentication is <strong>optional</strong>. Set the <code>DEVON_API_KEY</code> environment variable
-to enable bearer token auth on all <code>/api/v1/*</code> endpoints. The <code>/health</code>
-endpoint is always unauthenticated.</p>
+<p>DEVON uses three-tier authentication on all <code>/api/v1/*</code> endpoints (checked
+in order):</p>
+<ol>
+<li><strong><code>DEVON_API_KEY</code> env var</strong> — if set, requires <code>Authorization: Bearer &lt;key&gt;</code>.
+   Set to <code>disable</code> to explicitly skip auth.</li>
+<li><strong>Config file</strong> (<code>secrets.api_key</code>) — same bearer auth, key stored via
+   first-run setup or <code>PUT /api/v1/config/secrets</code>.</li>
+<li><strong>Neither set</strong> — returns <strong>503</strong> <code>DEVON_SETUP_REQUIRED</code>, triggering
+   the Web UI first-run setup flow.</li>
+</ol>
+<p>The <code>/health</code> and <code>/api/v1/setup/*</code> endpoints are always unauthenticated.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">DEVON_API_KEY</span><span class="o">=</span>my-secret<span class="w"> </span>devon<span class="w"> </span>serve
 </code></pre></div>
 <p>Clients pass the token in the <code>Authorization</code> header:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer my-secret&quot;</span><span class="w"> </span>http://localhost:8000/api/v1/models
 </code></pre></div>
-<p>When <code>DEVON_API_KEY</code> is unset or empty, all requests are allowed without a
-token.</p>
 <h2 id="endpoint-overview">Endpoint Overview<a class="headerlink" href="#endpoint-overview" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1827,6 +1899,16 @@ token.</p>
 <td>GET</td>
 <td><code>/health</code></td>
 <td>Health check (no auth)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/setup/status</code></td>
+<td>Check if first-run setup is needed (no auth)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/setup</code></td>
+<td>Generate API key during first-run setup (no auth)</td>
 </tr>
 <tr>
 <td>GET</td>
@@ -1851,7 +1933,22 @@ token.</p>
 <tr>
 <td>POST</td>
 <td><code>/api/v1/downloads</code></td>
-<td>Download a model</td>
+<td>Start a download (200 cached or 202 accepted)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/downloads</code></td>
+<td>List all download jobs</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/downloads/{job_id}</code></td>
+<td>Get download job status</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/downloads/{job_id}/restart</code></td>
+<td>Restart a failed download</td>
 </tr>
 <tr>
 <td>GET</td>
@@ -1867,6 +1964,26 @@ token.</p>
 <td>POST</td>
 <td><code>/api/v1/export</code></td>
 <td>Export model list</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/config</code></td>
+<td>Get configuration (secrets masked)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/v1/config</code></td>
+<td>Update configuration</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/config/setup-status</code></td>
+<td>First-run setup status</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/v1/config/secrets</code></td>
+<td>Set HF token / API key (write-only)</td>
 </tr>
 </tbody>
 </table>
@@ -1894,17 +2011,22 @@ response schemas.</p>
 <p>Returns both local storage info and remote metadata:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/models/huggingface/Qwen/Qwen2.5-7B-Instruct
 </code></pre></div>
-<h3 id="download-a-model">Download a model<a class="headerlink" href="#download-a-model" title="Permanent link">&para;</a></h3>
+<h3 id="start-a-download">Start a download<a class="headerlink" href="#start-a-download" title="Permanent link">&para;</a></h3>
+<p>Downloads are asynchronous. The <code>POST</code> validates the model exists (fast API
+call), then launches a background job and returns immediately:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/downloads<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model_id&quot;: &quot;Qwen/Qwen2.5-7B-Instruct&quot;}&#39;</span>
 </code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Long-running request</p>
-<p>Downloads run synchronously in the request thread. Set a long client
-timeout (e.g., 30 minutes) for large models.</p>
-</div>
-<p>Optional fields in the request body:</p>
+<p><strong>Response codes:</strong></p>
+<ul>
+<li><strong>200</strong> — model already downloaded (and <code>force</code> is false). Body contains
+  <code>{"cached": {...}}</code> with the existing download info.</li>
+<li><strong>202</strong> — download job created. Body contains <code>{"job": {...}}</code> with the
+  job ID and status.</li>
+<li><strong>404</strong> — model not found on the source. No job is created.</li>
+</ul>
+<p>Request body fields:</p>
 <table>
 <thead>
 <tr>
@@ -1941,26 +2063,45 @@ timeout (e.g., 30 minutes) for large models.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="list-download-jobs">List download jobs<a class="headerlink" href="#list-download-jobs" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/downloads
+</code></pre></div>
+<p>Returns all tracked jobs (downloading, completed, failed) sorted newest
+first. Each job includes <code>id</code>, <code>model_id</code>, <code>source</code>, <code>status</code>, timestamps,
+and <code>result</code> (for completed jobs) or <code>error</code> (for failed jobs).</p>
+<h3 id="get-download-job-status">Get download job status<a class="headerlink" href="#get-download-job-status" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/downloads/<span class="o">{</span>job_id<span class="o">}</span>
+</code></pre></div>
+<h3 id="restart-a-failed-download">Restart a failed download<a class="headerlink" href="#restart-a-failed-download" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/downloads/<span class="o">{</span>job_id<span class="o">}</span>/restart
+</code></pre></div>
+<p>Creates a new job with <code>force=True</code> for the same model. Only works on
+jobs with status <code>failed</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">In-memory job tracking</p>
+<p>Download jobs are stored in memory. If the server restarts, job history
+is lost. Completed downloads remain in the storage index regardless.</p>
+</div>
 <h3 id="delete-a-model">Delete a model<a class="headerlink" href="#delete-a-model" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:8000/api/v1/models/huggingface/Qwen/Qwen2.5-7B-Instruct
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:8000/api/v1/models/huggingface/Qwen/Qwen2.5-7B-Instruct
 </code></pre></div>
 <h3 id="storage-status">Storage status<a class="headerlink" href="#storage-status" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/status
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/status
 </code></pre></div>
 <h3 id="clean-unused-models">Clean unused models<a class="headerlink" href="#clean-unused-models" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30}&#39;</span>
 </code></pre></div>
 <p>Preview without deleting:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30, &quot;dry_run&quot;: true}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/clean<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;unused&quot;: true, &quot;days&quot;: 30, &quot;dry_run&quot;: true}&#39;</span>
 </code></pre></div>
 <h3 id="export-model-list">Export model list<a class="headerlink" href="#export-model-list" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/export<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;format&quot;: &quot;kitt&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/export<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;format&quot;: &quot;kitt&quot;}&#39;</span>
 </code></pre></div>
 <hr />
 <h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
@@ -1975,7 +2116,7 @@ timeout (e.g., 30 minutes) for large models.</p>
 <tbody>
 <tr>
 <td><code>DEVON_API_KEY</code></td>
-<td>Bearer token for authentication (empty = no auth)</td>
+<td>Bearer token for authentication (<code>disable</code> = no auth, empty = use config or trigger setup)</td>
 </tr>
 <tr>
 <td><code>DEVON_STORAGE_PATH</code></td>
@@ -1997,8 +2138,8 @@ timeout (e.g., 30 minutes) for large models.</p>
 <li><strong>Single worker</strong> — the default runs one Uvicorn worker to avoid race
   conditions on JSON index writes. Do not increase worker count without
   external write coordination.</li>
-<li><strong>Synchronous downloads</strong> — model downloads block the request thread.
-  Background task support may be added in a future release.</li>
+<li><strong>In-memory job tracking</strong> — download job history is lost on server
+  restart. Completed downloads persist in the storage index.</li>
 </ul>
 <hr />
 <h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
