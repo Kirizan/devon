@@ -1,3 +1,5 @@
+import copy
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -24,7 +26,14 @@ DEFAULT_CONFIG = {
     "display": {
         "color": True,
     },
+    "secrets": {
+        "hf_token": None,
+        "api_key": None,
+    },
 }
+
+SECRET_KEYS = {"secrets.hf_token", "secrets.api_key"}
+SECRET_MASK = "\u2022\u2022\u2022\u2022\u2022\u2022"
 
 
 class Settings:
@@ -89,6 +98,35 @@ class Settings:
     def search_limit(self) -> int:
         """Get default search result limit."""
         return self.get("search.default_limit", 20)
+
+    @property
+    def is_configured(self) -> bool:
+        """True if a user config file exists on disk."""
+        return self.config_path.exists()
+
+    def update(self, updates: Dict[str, Any]) -> None:
+        """Merge partial updates into config and persist to disk.
+
+        Accepts a nested dict that is deep-merged over the current config.
+        Secret keys are handled here — env vars for HF_TOKEN are also updated.
+        """
+        self._config = self._deep_merge(self._config, updates)
+
+        # Sync HF_TOKEN env var when set via config
+        hf_token = self.get("secrets.hf_token")
+        if hf_token:
+            os.environ["HF_TOKEN"] = hf_token
+
+        self.save()
+
+    def to_safe_dict(self) -> Dict[str, Any]:
+        """Return the full config with secret values masked."""
+        result = copy.deepcopy(self._config)
+        secrets = result.get("secrets", {})
+        for key in list(secrets.keys()):
+            if secrets[key]:
+                secrets[key] = SECRET_MASK
+        return result
 
     def save(self) -> None:
         """Save current config to disk."""
