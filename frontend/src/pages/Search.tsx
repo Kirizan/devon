@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { searchModels, type SearchParams, type ModelResult } from "../api/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { searchModels, downloadModel, type SearchParams, type ModelResult } from "../api/client";
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -33,12 +33,32 @@ export default function Search() {
   const [activeSearch, setActiveSearch] = useState<SearchParams | null>(
     searchParams.get("query") ? { query: searchParams.get("query") ?? undefined } : null,
   );
+  const [downloading, setDownloading] = useState<Record<string, "pending" | "done" | "error">>({});
+
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["search", activeSearch],
     queryFn: () => searchModels(activeSearch!),
     enabled: activeSearch !== null,
   });
+
+  const dlMut = useMutation({
+    mutationFn: downloadModel,
+    onSuccess: (_data, variables) => {
+      setDownloading((prev) => ({ ...prev, [variables.model_id]: "done" }));
+      queryClient.invalidateQueries({ queryKey: ["models"] });
+      queryClient.invalidateQueries({ queryKey: ["storage-status"] });
+    },
+    onError: (_err, variables) => {
+      setDownloading((prev) => ({ ...prev, [variables.model_id]: "error" }));
+    },
+  });
+
+  function handleDownload(model: ModelResult) {
+    setDownloading((prev) => ({ ...prev, [model.model_id]: "pending" }));
+    dlMut.mutate({ model_id: model.model_id, source: model.source });
+  }
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -192,6 +212,7 @@ export default function Search() {
                   <th className="text-right px-4 py-2 font-medium">Size</th>
                   <th className="text-right px-4 py-2 font-medium">Downloads</th>
                   <th className="text-right px-4 py-2 font-medium">Likes</th>
+                  <th className="px-4 py-2 font-medium w-24"></th>
                 </tr>
               </thead>
               <tbody>
@@ -238,6 +259,27 @@ export default function Search() {
                     </td>
                     <td className="px-4 py-2 text-right text-ctp-subtext0">
                       {formatNumber(r.likes)}
+                    </td>
+                    <td className="px-4 py-2 text-right">
+                      {downloading[r.model_id] === "done" ? (
+                        <span className="text-xs text-ctp-green">Downloaded</span>
+                      ) : downloading[r.model_id] === "error" ? (
+                        <button
+                          onClick={() => handleDownload(r)}
+                          className="rounded bg-ctp-red/10 px-2.5 py-1 text-xs text-ctp-red hover:bg-ctp-red/20 transition-colors"
+                        >
+                          Retry
+                        </button>
+                      ) : downloading[r.model_id] === "pending" ? (
+                        <span className="text-xs text-ctp-blue animate-pulse">Downloading...</span>
+                      ) : (
+                        <button
+                          onClick={() => handleDownload(r)}
+                          className="rounded bg-ctp-blue/10 px-2.5 py-1 text-xs text-ctp-blue hover:bg-ctp-blue/20 transition-colors"
+                        >
+                          Download
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
