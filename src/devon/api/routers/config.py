@@ -11,7 +11,7 @@ from devon.api.schemas import (
     SecretsUpdateRequest,
     SetupStatusResponse,
 )
-from devon.config.settings import SECRET_KEYS, Settings
+from devon.config.settings import Settings
 
 router = APIRouter(prefix="/api/v1", dependencies=[Depends(verify_api_key)])
 
@@ -30,7 +30,7 @@ async def update_config(
     """Update configuration. Secrets in the payload are ignored — use PUT /config/secrets."""
     # Strip secret keys from the update to prevent accidental exposure
     updates = body.config
-    secrets_section = updates.pop("secrets", None)
+    updates.pop("secrets", None)
 
     settings.update(updates)
     return ConfigResponse(config=settings.to_safe_dict())
