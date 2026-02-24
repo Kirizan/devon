@@ -98,6 +98,7 @@ def create_app() -> FastAPI:
     from devon.api.routers.download import router as download_router
     from devon.api.routers.storage import router as storage_router
     from devon.api.routers.config import router as config_router
+    from devon.api.routers.scan import router as scan_router
 
     app.include_router(health_router)
     app.include_router(setup_router)
@@ -106,6 +107,7 @@ def create_app() -> FastAPI:
     app.include_router(download_router)
     app.include_router(storage_router)
     app.include_router(config_router)
+    app.include_router(scan_router)
 
     # -- Serve Web UI static files --
     if STATIC_DIR.is_dir():
