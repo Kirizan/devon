@@ -1,6 +1,8 @@
 """FastAPI application factory for DEVON."""
 
+import logging
 import os
+import re
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -14,8 +16,10 @@ from devon.config.settings import Settings
 from devon.storage.organizer import ModelStorage
 from devon.ui import STATIC_DIR
 
+logger = logging.getLogger(__name__)
+
 # Ensure source plugins are registered
-import devon.sources  # noqa: F401
+import devon.sources  # noqa: F401, E402
 
 
 @asynccontextmanager
@@ -64,11 +68,12 @@ def create_app() -> FastAPI:
     )
 
     # -- Security headers middleware --
-    import re
-
     _origin_re = re.compile(r"^https?://[a-zA-Z0-9._:-]+$")
     _raw_frame_ancestors = os.environ.get("DEVON_FRAME_ANCESTORS", "").strip()
     _valid_ancestors = [o for o in _raw_frame_ancestors.split() if _origin_re.match(o)]
+    _rejected = [o for o in _raw_frame_ancestors.split() if o and not _origin_re.match(o)]
+    if _rejected:
+        logger.warning("DEVON_FRAME_ANCESTORS: rejected invalid origins: %s", _rejected)
 
     @app.middleware("http")
     async def add_security_headers(request, call_next):
