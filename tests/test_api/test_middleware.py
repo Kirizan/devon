@@ -91,6 +91,7 @@ class TestSecurityHeaders:
     @pytest.fixture
     def app(self, tmp_path, monkeypatch):
         monkeypatch.delenv("DEVON_ENABLE_HSTS", raising=False)
+        monkeypatch.delenv("DEVON_FRAME_ANCESTORS", raising=False)
         return _make_app(monkeypatch, tmp_path, DEVON_API_KEY="disable")
 
     @pytest.fixture
