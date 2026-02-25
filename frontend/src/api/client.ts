@@ -4,7 +4,11 @@ declare global {
   }
 }
 
-const BASE_URL: string = (window.__DEVON_BASE_URL__ ?? "").replace(/\/+$/, "");
+const _rawBase = (window.__DEVON_BASE_URL__ ?? "").replace(/\/+$/, "");
+if (_rawBase && !_rawBase.startsWith("/")) {
+  throw new Error(`Invalid __DEVON_BASE_URL__: must be a relative path, got "${_rawBase}"`);
+}
+const BASE_URL: string = _rawBase;
 
 let apiKey: string | null = sessionStorage.getItem("devon_api_key");
 
