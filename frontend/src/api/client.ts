@@ -1,4 +1,5 @@
-const BASE_URL = "";
+const BASE_URL: string =
+  (window as unknown as Record<string, unknown>).__DEVON_BASE_URL__ as string ?? "";
 
 let apiKey: string | null = sessionStorage.getItem("devon_api_key");
 
