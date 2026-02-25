@@ -1,5 +1,10 @@
-const BASE_URL: string =
-  (window as unknown as Record<string, unknown>).__DEVON_BASE_URL__ as string ?? "";
+declare global {
+  interface Window {
+    __DEVON_BASE_URL__?: string;
+  }
+}
+
+const BASE_URL: string = (window.__DEVON_BASE_URL__ ?? "").replace(/\/+$/, "");
 
 let apiKey: string | null = sessionStorage.getItem("devon_api_key");
 
