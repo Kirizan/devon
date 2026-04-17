@@ -173,8 +173,12 @@ func (s *Source) getJSON(ctx context.Context, p string, out any) error {
 	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		body, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
-		return fmt.Errorf("huggingface: %s: status %d: %s", p, resp.StatusCode, strings.TrimSpace(string(body)))
+		raw, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
+		body := strings.TrimSpace(string(raw))
+		if len(body) > 200 {
+			body = body[:200] + "..."
+		}
+		return fmt.Errorf("huggingface: %s: status %d: %s", p, resp.StatusCode, body)
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(out); err != nil {
